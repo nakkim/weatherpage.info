@@ -1,0 +1,26 @@
+.leaflet-top .leaflet-control {
+  margin-top: 50px;
+}
+
+.leaflet-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.datepickerInput {
+  max-width: 115px;
+  padding-left: 10px;
+  margin: 0 4px;
+}
+
+.react-datepicker__time-list-item  {
+  height: auto !important;
+}
+
+.react-datepicker__header {
+  height: 50px !important;
+}
+
+.react-datepicker-time__header {
+  display: none;
+}

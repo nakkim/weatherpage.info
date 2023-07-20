@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import * as React from "react";
 import { Dispatch, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";

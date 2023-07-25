@@ -1,0 +1,16 @@
+{
+  "restoreTerminals.terminals": [
+    {
+      "splitTerminals": [
+        {
+          "name": "unit tests",
+          "commands": ["npm run test"]
+        },
+        {
+          "name": "start",
+          "commands": ["npm run dev"]
+        }
+      ]
+    }
+  ]
+}

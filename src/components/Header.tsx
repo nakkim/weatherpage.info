@@ -62,6 +62,7 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
         </Box>
         <Box>
           <DatePicker
+            customInput={<input data-testid="observation-time-value" type="text" />}
             placeholderText=""
             className="datepickerInput"
             selected={startDate}
@@ -92,6 +93,7 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
         <Box>
           <Button
             sx={styles.button}
+            data-testid="get-historical-observations-button"
             variant={isCurrent ? "outlined" : "contained"}
             onClick={() => {
               setIsCurrent(false)
@@ -103,6 +105,7 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
           </Button>
           <Button
             sx={styles.button}
+            data-testid="get-current-observations-button"
             variant={isCurrent ? "contained" : "outlined"}
             onClick={() => {
               setIsCurrent(true)

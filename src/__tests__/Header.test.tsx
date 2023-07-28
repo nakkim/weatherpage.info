@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { describe, it, vi, expect, beforeEach } from "vitest";
 import {
-  getByTestId,
   render,
   fireEvent,
-  screen,
-  waitFor,
-  getByText,
 } from "@testing-library/react";
 
 import Header from "../components/Header";

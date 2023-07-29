@@ -53,7 +53,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (data[0]) setObsTime(new Date(data[0]?.time));
+    if (data[0]) setObsTime(new Date(`${data[0]?.time}Z`));
   }, [data]);
 
   return (

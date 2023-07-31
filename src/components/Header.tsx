@@ -34,12 +34,15 @@ const styles = {
 };
 
 const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
-  const [time, setTime] = useState<string>('')
+  const [time, setTime] = useState<string>("");
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [isCurrent, setIsCurrent] = useState<boolean>(true);
 
   useEffect(() => {
-    if (obsTime) setStartDate(obsTime);
+    if (obsTime) {
+      setStartDate(obsTime);
+      setTime(obsTime?.toISOString());
+    }
   }, [obsTime]);
 
   const checkIfToday = (date: Date | null) => {
@@ -62,15 +65,16 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
         </Box>
         <Box>
           <DatePicker
-            customInput={<input data-testid="observation-time-value" type="text" />}
+            customInput={
+              <input data-testid="observation-time-value" type="text" />
+            }
             placeholderText=""
             className="datepickerInput"
             selected={startDate}
             showTimeSelect
             title="jeejee"
             onChange={(date) => {
-              if(date)
-              setTime(date?.toISOString())
+              if (date) setTime(date?.toISOString());
               setStartDate(date);
             }}
             maxDate={new Date()}
@@ -96,9 +100,8 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
             data-testid="get-historical-observations-button"
             variant={isCurrent ? "outlined" : "contained"}
             onClick={() => {
-              setIsCurrent(false)
-              if(setTimeValue)
-              setTimeValue(time)
+              setIsCurrent(false);
+              if (setTimeValue) setTimeValue(time);
             }}
           >
             Hae
@@ -108,9 +111,8 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
             data-testid="get-current-observations-button"
             variant={isCurrent ? "contained" : "outlined"}
             onClick={() => {
-              setIsCurrent(true)
-              if(setTimeValue)
-              setTimeValue('now')
+              setIsCurrent(true);
+              if (setTimeValue) setTimeValue("now");
             }}
           >
             Nyt

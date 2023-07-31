@@ -5,7 +5,7 @@ import {
   fireEvent,
 } from "@testing-library/react";
 
-import Header from "../components/Header";
+import Header from "./Header";
 
 describe("Renders Header component succesfully", async () => {
   const obsTime = new Date("2023-01-01T00:00:00Z");

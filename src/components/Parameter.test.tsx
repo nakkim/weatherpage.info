@@ -3,7 +3,7 @@ import { describe, it, vi, expect, beforeEach } from "vitest";
 import { render, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import Parameter from "../components/Parameter";
+import Parameter from "./Parameter";
 
 describe("Renders Parameter component succesfully", async () => {
   const selectedParameter = "t2m";

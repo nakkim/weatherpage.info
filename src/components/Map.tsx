@@ -48,7 +48,7 @@ const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
               : paramValue?.toFixed(1);
           Object.assign(element.style, {
             ...styles.element,
-            backgroundColor: resolveElementColor(paramValue as number),
+            backgroundColor: resolveElementColor('t2m', paramValue as number),
           });
 
           const text = L.divIcon({

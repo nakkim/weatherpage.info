@@ -4,11 +4,13 @@ import Header from "./components/Header";
 import { useState } from "react";
 import { useEffect } from "react";
 import { IResultData, getTimeseriesData } from "./network/timeseries";
+import Parameter from "./components/Parameter";
 
 function App() {
   const [data, setData] = useState<IResultData[]>([]);
   const [obsTime, setObsTime] = useState<Date | undefined>(undefined);
   const [timeValue, setTimeValue] = useState<string | undefined>(undefined)
+  const [selectedParameter, setSelectedParameter] = useState<string>('t2m')
 
   const getData = () => {
     const urlParameters = [
@@ -59,7 +61,8 @@ function App() {
   return (
     <>
       <Header obsTime={obsTime} setTimeValue={setTimeValue}/>
-      <Map data={data} selectedParameter={"t2m"} />
+      <Parameter selectedParameter={selectedParameter} setSelectedParameter={setSelectedParameter}/>
+      <Map data={data} selectedParameter={selectedParameter} />
     </>
   );
 }

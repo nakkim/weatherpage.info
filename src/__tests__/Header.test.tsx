@@ -61,7 +61,6 @@ describe("Renders Header component succesfully", async () => {
     expect(button.textContent).toBe("Hae");
 
     const input = result.getByTestId("observation-time-value");
-    console.log()
     expect((input as HTMLInputElement).value).toBe("01.01.2023 02:00");
   });
 });

@@ -3,29 +3,16 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import React from "react";
 import { IResultData } from "../network/timeseries";
-import { resolveElementColor } from "../utils/map";
+import { resolveElement } from "../utils/map";
 
 interface IProps {
-  data: IResultData[]
-  selectedParameter: string
+  data: IResultData[];
+  selectedParameter: string;
 }
 
-const styles = {
-  element: {
-    fontWeight: "bold",
-    opacity: 0.85,
-    border: "1px solid black",
-    color: "black",
-    paddingLeft: "5px",
-    paddingRight: "5px",
-    fontSize: "15px",
-    position: "relative",
-    left: "1px",
-    width: "20px",
-  },
-};
-
 const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
+  const windParameters = ["ws_10min", "wg_10min", "wd_10min"];
+  const displayArrowIcon = windParameters.includes(selectedParameter);
 
   return (
     <MapContainer
@@ -38,32 +25,42 @@ const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {data && data.map((station: IResultData) => {
-        const paramValue = station[selectedParameter as keyof IResultData];
-        if (station.lat && station.lon && paramValue) {
-          const element: HTMLElement = document.createElement("span");
-          element.innerText +=
-            typeof paramValue === "string"
-              ? paramValue
-              : paramValue?.toFixed(1);
-          Object.assign(element.style, {
-            ...styles.element,
-            backgroundColor: resolveElementColor('t2m', paramValue as number),
-          });
-
-          const text = L.divIcon({
-            iconAnchor: [0, 0],
-            html: element,
-          });
-          return (
-            <Marker
-              key={station?.fmisid}
-              position={[station.lat, station.lon]}
-              icon={text}
-            />
-          );
-        }
-      })}
+      {data &&
+        data.map((station: IResultData) => {
+          const paramValue = station[selectedParameter as keyof IResultData];
+          if (station.lat && station.lon && paramValue) {
+            const element = resolveElement(
+              selectedParameter,
+              paramValue as number
+            );
+            return (
+              <>
+                <Marker
+                  key={station?.fmisid}
+                  position={[station.lat, station.lon]}
+                  icon={L.divIcon({
+                    iconAnchor: displayArrowIcon ? [10, 0] : [0, 0],
+                    html: element,
+                    iconSize: displayArrowIcon ? [20, 18] : [0, 0],
+                    className: displayArrowIcon ? "leaflet-div-icon-wind" : "leaflet-div-icon-none",
+                  })}
+                />
+                {displayArrowIcon && (
+                  <Marker
+                    key={station?.fmisid}
+                    position={[station.lat, station.lon]}
+                    icon={L.divIcon({
+                      iconAnchor: [-10, 1],
+                      html: element,
+                      iconSize: [0, 0],
+                      className: "leaflet-div-icon-none",
+                    })}
+                  />
+                )}
+              </>
+            );
+          }
+        })}
     </MapContainer>
   );
 };

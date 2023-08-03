@@ -24,3 +24,10 @@
 .react-datepicker-time__header {
   display: none;
 }
+
+.leaflet-div-icon-wind {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid black;
+  position: 'relative';
+  left: '-10px';
+}

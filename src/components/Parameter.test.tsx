@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { describe, it, vi, expect, beforeEach } from "vitest";
-import { render, fireEvent } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render } from "@testing-library/react";
 
 import Parameter from "./Parameter";
 

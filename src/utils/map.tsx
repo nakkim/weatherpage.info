@@ -1,6 +1,21 @@
+const hexToRgb = (hex: string | undefined) => {
+  if (hex) {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    let r: number
+    let g: number
+    let b: number
+    if(result) {
+      r = parseInt(result[1], 16)
+      g = parseInt(result[2], 16)
+      b = parseInt(result[3], 16)
+      return `${r},${g},${b}`;
+    }
+  }
+};
 export const resolveElementColor = (param: string, value: number) => {
   switch (param) {
-    case "t2m" || "dewpoint":
+    case "dewpoint":
+    case "t2m":
       if (value < -30) return "#8a79f7";
       if (value >= -30 && value < -28) return "#8a79f7";
       if (value >= -28 && value < -26) return "#6e70e7";
@@ -36,5 +51,41 @@ export const resolveElementColor = (param: string, value: number) => {
       if (value >= 28 && value < 30) return "#9e0101";
       if (value >= 30) return "#eb0052";
       return "#8aedbb";
+
+    case "rh":
+      if (value >= 0 && value < 50) return "#f7fbff";
+      if (value >= 50 && value < 60) return "#deebf7";
+      if (value >= 60 && value < 65) return "#c6dbef";
+      if (value >= 65 && value < 70) return "#9ecae1";
+      if (value >= 70 && value < 75) return "#6baed6";
+      if (value >= 75 && value < 80) return "#4292c6";
+      if (value >= 80 && value < 85) return "#2171b5";
+      if (value >= 85 && value < 90) return "#08519c";
+      if (value >= 90) return "#08306b";
   }
+};
+
+export const resolveElement = (param: string, value: number) => {
+  const styles = {
+    element: {
+      fontWeight: "bold",
+      border: "1px solid black",
+      color: "black",
+      paddingLeft: "5px",
+      paddingRight: "5px",
+      fontSize: "15px",
+      position: "relative",
+      left: "1px",
+      width: "20px",
+    },
+  };
+  const element: HTMLElement = document.createElement("span");
+  element.innerText += typeof value === "string" ? value : value.toFixed(1);
+  Object.assign(element.style, {
+    ...styles.element,
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    backgroundColor: `rgba(${hexToRgb(resolveElementColor(param, value))},0.7)`,
+  });
+
+  return element;
 };

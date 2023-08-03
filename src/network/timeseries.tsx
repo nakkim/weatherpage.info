@@ -51,7 +51,9 @@ export const getTimeseriesData = async (
     endtime: endTime ? endTime : 'now',
     format: 'json',
     missingvalue: '-',
-    keyword: 'synop_fi',
+    ...(geoid
+      ? { geoid: geoid }
+      : { keyword: 'synop_fi', }),
     param: requestParameters.toString(),
     precision: 'double',
     producer: 'opendata',

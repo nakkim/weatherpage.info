@@ -38,6 +38,8 @@ const Parameter: React.FC<IProps> = ({selectedParameter, setSelectedParameter}) 
         value={selectedParameter}
         onChange={handleChange}
       >
+        <MenuItem value={'ws_10min'}>Keskituuli</MenuItem>
+        <MenuItem value={'wg_10min'}>Maksimipuuska</MenuItem>
         <MenuItem value={'t2m'}>Lämpötila</MenuItem>
         <MenuItem value={'dewpoint'} selected>Kastepiste</MenuItem>
         <MenuItem value={'rh'} selected>Suhteellinen kosteus</MenuItem>

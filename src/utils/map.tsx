@@ -1,13 +1,13 @@
 const hexToRgb = (hex: string | undefined) => {
   if (hex) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    let r: number
-    let g: number
-    let b: number
-    if(result) {
-      r = parseInt(result[1], 16)
-      g = parseInt(result[2], 16)
-      b = parseInt(result[3], 16)
+    let r: number;
+    let g: number;
+    let b: number;
+    if (result) {
+      r = parseInt(result[1], 16);
+      g = parseInt(result[2], 16);
+      b = parseInt(result[3], 16);
       return `${r},${g},${b}`;
     }
   }
@@ -62,6 +62,19 @@ export const resolveElementColor = (param: string, value: number) => {
       if (value >= 80 && value < 85) return "#2171b5";
       if (value >= 85 && value < 90) return "#08519c";
       if (value >= 90) return "#08306b";
+      return "#08306b";
+
+    case "ws_10min":
+    case "wg_10min":
+      if (value < 1) return "#ffffff";
+      if (value >= 1 && value < 2) return "#e6f7ff";
+      if (value >= 2 && value < 7) return "#ccffcc";
+      if (value >= 7 && value < 14) return "#ffff99";
+      if (value >= 14 && value < 21) return "#ffcc00";
+      if (value >= 21 && value < 25) return "#ff3300";
+      if (value >= 25 && value < 28) return "#ff0066";
+      if (value >= 28 && value < 32) return "#cc0099";
+      if (value >= 32) return "#6600cc";
   }
 };
 

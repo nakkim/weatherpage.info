@@ -4,6 +4,8 @@ import "leaflet/dist/leaflet.css";
 import React from "react";
 import { IResultData } from "../network/timeseries";
 import { resolveElement } from "../utils/map";
+import "leaflet-rotatedmarker";
+import arrow from "../assets/arrow.svg";
 
 interface IProps {
   data: IResultData[];
@@ -11,7 +13,7 @@ interface IProps {
 }
 
 const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
-  const windParameters = ["ws_10min", "wg_10min", "wd_10min"];
+  const windParameters = ["ws_10min", "wg_10min"];
   const displayArrowIcon = windParameters.includes(selectedParameter);
 
   return (
@@ -42,20 +44,36 @@ const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
                     iconAnchor: displayArrowIcon ? [10, 0] : [0, 0],
                     html: element,
                     iconSize: displayArrowIcon ? [20, 18] : [0, 0],
-                    className: displayArrowIcon ? "leaflet-div-icon-wind" : "leaflet-div-icon-none",
+                    className: displayArrowIcon
+                      ? "leaflet-div-icon-wind"
+                      : "leaflet-div-icon-none",
                   })}
                 />
                 {displayArrowIcon && (
-                  <Marker
-                    key={station?.fmisid}
-                    position={[station.lat, station.lon]}
-                    icon={L.divIcon({
-                      iconAnchor: [-10, 1],
-                      html: element,
-                      iconSize: [0, 0],
-                      className: "leaflet-div-icon-none",
-                    })}
-                  />
+                  <>
+                    <Marker
+                      key={station?.fmisid}
+                      position={[station.lat, station.lon]}
+                      icon={L.divIcon({
+                        iconAnchor: [-10, 1],
+                        html: element,
+                        iconSize: [0, 0],
+                        className: "leaflet-div-icon-none",
+                      })}
+                    />
+                    <Marker
+                      key={station?.fmisid}
+                      position={[station.lat, station.lon]}
+                      rotationAngle={station['wd_10min']}
+                      rotationOrigin="center"
+                      icon={L.icon({
+                        iconUrl: arrow,
+                        iconAnchor: [22, 12],
+                        popupAnchor: [0, 0],
+                        iconSize: [45, 45],
+                      })}
+                    />
+                  </>
                 )}
               </>
             );

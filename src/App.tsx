@@ -10,7 +10,7 @@ function App() {
   const [data, setData] = useState<IResultData[]>([]);
   const [obsTime, setObsTime] = useState<Date | undefined>(undefined);
   const [timeValue, setTimeValue] = useState<string | undefined>("now");
-  const [selectedParameter, setSelectedParameter] = useState<string>("t2m");
+  const [selectedParameter, setSelectedParameter] = useState<string>("ws_10min");
 
   const getData = () => {
     const urlParameters = [

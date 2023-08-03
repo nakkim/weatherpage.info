@@ -22,6 +22,7 @@ const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
       zoom={6}
       scrollWheelZoom={true}
       id="map"
+      preferCanvas={true}
     >
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'

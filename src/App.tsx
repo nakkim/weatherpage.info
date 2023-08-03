@@ -9,8 +9,8 @@ import Parameter from "./components/Parameter";
 function App() {
   const [data, setData] = useState<IResultData[]>([]);
   const [obsTime, setObsTime] = useState<Date | undefined>(undefined);
-  const [timeValue, setTimeValue] = useState<string | undefined>(undefined)
-  const [selectedParameter, setSelectedParameter] = useState<string>('t2m')
+  const [timeValue, setTimeValue] = useState<string | undefined>("now");
+  const [selectedParameter, setSelectedParameter] = useState<string>("t2m");
 
   const getData = () => {
     const urlParameters = [
@@ -36,23 +36,28 @@ function App() {
       "dewpoint",
     ];
 
-    if (timeValue === 'now')
-    void getTimeseriesData(urlParameters, setData, "10");
-    else 
-    void getTimeseriesData(urlParameters, setData, "10", timeValue, timeValue);
-  }
+    if (timeValue === "now")
+      void getTimeseriesData(urlParameters, setData, "10");
+    else
+      void getTimeseriesData(
+        urlParameters,
+        setData,
+        "10",
+        timeValue,
+        timeValue
+      );
+  };
 
   useEffect(() => {
-    getData()
-  }, [timeValue])
+    getData();
 
-  useEffect(() => {
-    getData()
-    setInterval(() => {
-      if(timeValue === 'now')
-      getData()
-    }, 6*60000);
-  }, []);
+    const interval = setInterval(() => {
+      if (timeValue === "now") {
+        getData();
+      }
+    }, 5 * 60000);
+    return () => clearInterval(interval);
+  }, [timeValue]);
 
   useEffect(() => {
     if (data[0]) setObsTime(new Date(`${data[0]?.time}Z`));
@@ -60,8 +65,11 @@ function App() {
 
   return (
     <>
-      <Header obsTime={obsTime} setTimeValue={setTimeValue}/>
-      <Parameter selectedParameter={selectedParameter} setSelectedParameter={setSelectedParameter}/>
+      <Header obsTime={obsTime} setTimeValue={setTimeValue} />
+      <Parameter
+        selectedParameter={selectedParameter}
+        setSelectedParameter={setSelectedParameter}
+      />
       <Map data={data} selectedParameter={selectedParameter} />
     </>
   );

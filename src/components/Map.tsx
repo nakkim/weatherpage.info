@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -14,6 +15,7 @@ interface IProps {
 
 const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
   const windParameters = ["ws_10min", "wg_10min"];
+  const allowMissingValueParameters = ["ri_10min"];
   const displayArrowIcon = windParameters.includes(selectedParameter);
 
   return (
@@ -31,53 +33,68 @@ const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
       {data &&
         data.map((station: IResultData) => {
           const paramValue = station[selectedParameter as keyof IResultData];
-          if (station.lat && station.lon && paramValue) {
-            const element = resolveElement(
-              selectedParameter,
-              paramValue as number
-            );
-            return (
-              <>
+          if (station.lat && station.lon) {
+            if (
+              allowMissingValueParameters.includes(selectedParameter) &&
+              !paramValue
+            ) {
+              const element = resolveElement(selectedParameter, "-");
+              return (
                 <Marker
-                  key={station?.fmisid}
                   position={[station.lat, station.lon]}
                   icon={L.divIcon({
-                    iconAnchor: displayArrowIcon ? [10, 0] : [0, 0],
+                    iconAnchor: [0, 0],
                     html: element,
-                    iconSize: displayArrowIcon ? [20, 18] : [0, 0],
-                    className: displayArrowIcon
-                      ? "leaflet-div-icon-wind"
-                      : "leaflet-div-icon-none",
+                    iconSize: [0, 0],
+                    className: "leaflet-div-icon-none",
                   })}
                 />
-                {displayArrowIcon && (
-                  <>
-                    <Marker
-                      key={station?.fmisid}
-                      position={[station.lat, station.lon]}
-                      icon={L.divIcon({
-                        iconAnchor: [-10, 1],
-                        html: element,
-                        iconSize: [0, 0],
-                        className: "leaflet-div-icon-none",
-                      })}
-                    />
-                    <Marker
-                      key={station?.fmisid}
-                      position={[station.lat, station.lon]}
-                      rotationAngle={station['wd_10min']}
-                      rotationOrigin="center"
-                      icon={L.icon({
-                        iconUrl: arrow,
-                        iconAnchor: [22, 12],
-                        popupAnchor: [0, 0],
-                        iconSize: [45, 45],
-                      })}
-                    />
-                  </>
-                )}
-              </>
-            );
+              );
+            } else if (paramValue) {
+              const element = resolveElement(
+                selectedParameter,
+                paramValue as number
+              );
+              return (
+                <React.Fragment key={`${station?.fmisid}`}>
+                  <Marker
+                    position={[station.lat, station.lon]}
+                    icon={L.divIcon({
+                      iconAnchor: displayArrowIcon ? [10, 0] : [0, 0],
+                      html: element,
+                      iconSize: displayArrowIcon ? [20, 18] : [0, 0],
+                      className: displayArrowIcon
+                        ? "leaflet-div-icon-wind"
+                        : "leaflet-div-icon-none",
+                    })}
+                  />
+                  {displayArrowIcon && (
+                    <>
+                      <Marker
+                        position={[station.lat, station.lon]}
+                        icon={L.divIcon({
+                          iconAnchor: [-10, 1],
+                          html: element,
+                          iconSize: [0, 0],
+                          className: "leaflet-div-icon-none",
+                        })}
+                      />
+                      <Marker
+                        position={[station.lat, station.lon]}
+                        rotationAngle={station["wd_10min"]}
+                        rotationOrigin="center"
+                        icon={L.icon({
+                          iconUrl: arrow,
+                          iconAnchor: [22, 12],
+                          popupAnchor: [0, 0],
+                          iconSize: [45, 45],
+                        })}
+                      />
+                    </>
+                  )}
+                </React.Fragment>
+              );
+            }
           }
         })}
     </MapContainer>

@@ -70,7 +70,7 @@ function App() {
         selectedParameter={selectedParameter}
         setSelectedParameter={setSelectedParameter}
       />
-      <Map data={data} selectedParameter={selectedParameter} />
+      <Map key={1} data={data} selectedParameter={selectedParameter} />
     </>
   );
 }

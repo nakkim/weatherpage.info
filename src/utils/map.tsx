@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 const hexToRgb = (hex: string | undefined) => {
   if (hex) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
@@ -75,10 +76,43 @@ export const resolveElementColor = (param: string, value: number) => {
       if (value >= 25 && value < 28) return "#ff0066";
       if (value >= 28 && value < 32) return "#cc0099";
       if (value >= 32) return "#6600cc";
+      return "#6600cc";
+
+    case "pressure":
+      if (value < 980) return "#9e0142";
+      if (value >= 985 && value < 990) return "#d53e4f";
+      if (value >= 990 && value < 995) return "#f46d43";
+      if (value >= 995 && value < 1000) return "#fdae61";
+      if (value >= 1000 && value < 1005) return "#fee08b";
+      if (value >= 1005 && value < 1010) return "#ffffbf";
+      if (value >= 1010 && value < 1015) return "#e6f598";
+      if (value >= 1015 && value < 1020) return "#abdda4";
+      if (value >= 1020 && value < 1025) return "#66c2a5";
+      if (value >= 1025 && value < 1030) return "#3288bd";
+      if (value > 1030) return "#5e4fa2";
+      return "#5e4fa2";
+
+    case "ri_10min":
+      if (value > 0 && value <= 0.1) return "#fff7fb";
+      if (value > 0.1 && value <= 0.2) return "#ece7f2";
+      if (value > 0.2 && value <= 0.3) return "#d0d1e6";
+      if (value > 0.3 && value <= 0.4) return "#a6bddb";
+      if (value > 0.4 && value <= 0.5) return "#74a9cf";
+      if (value > 0.5 && value <= 1.0) return "#3690c0";
+      if (value > 1.0 && value <= 1.5) return "#0570b0";
+      if (value > 1.5 && value <= 2.0) return "#045a8d";
+      if (value > 2.0 && value <= 3.0) return "#4575b4";
+      if (value > 3.0 && value <= 4.0) return "#91bfdb";
+      if (value > 4.0 && value <= 5.0) return "#e0f3f8";
+      if (value > 5.0 && value <= 10.0) return "#ffffbf";
+      if (value > 10.0 && value <= 20.0) return "#fee090";
+      if (value > 20.0 && value <= 30.0) return "#fc8d59";
+      if (value > 30.0) return "#d73027";
+      return "#d73027";
   }
 };
 
-export const resolveElement = (param: string, value: number) => {
+export const resolveElement = (param: string, value: number | string) => {
   const styles = {
     element: {
       fontWeight: "bold",
@@ -93,12 +127,20 @@ export const resolveElement = (param: string, value: number) => {
     },
   };
   const element: HTMLElement = document.createElement("span");
-  element.innerText += typeof value === "string" ? value : value.toFixed(1);
-  Object.assign(element.style, {
-    ...styles.element,
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    backgroundColor: `rgba(${hexToRgb(resolveElementColor(param, value))},0.7)`,
-  });
+  element.innerText = typeof value === "string" ? value : value.toFixed(1);
+
+  if (typeof value === "number")
+    Object.assign(element.style, {
+      ...styles.element,
+      backgroundColor: `rgba(${hexToRgb(
+        resolveElementColor(param, value)
+      )},0.7)`,
+    });
+  else
+    Object.assign(element.style, {
+      ...styles.element,
+      ...{ color: "black", border: "none" },
+    });
 
   return element;
 };

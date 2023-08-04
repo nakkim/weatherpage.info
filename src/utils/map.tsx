@@ -1,4 +1,29 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
+import nn0 from "../assets/nn/0.svg";
+import nn1 from "../assets/nn/1.svg";
+import nn2 from "../assets/nn/2.svg";
+import nn3 from "../assets/nn/3.svg";
+import nn4 from "../assets/nn/4.svg";
+import nn5 from "../assets/nn/5.svg";
+import nn6 from "../assets/nn/6.svg";
+import nn7 from "../assets/nn/7.svg";
+import nn8 from "../assets/nn/8.svg";
+import nn9 from "../assets/nn/9.svg";
+
+export const resolveNNValue = (value: number | string) => {
+  if(value === 0) return nn0
+  if(value === 1) return nn1
+  if(value === 2) return nn2
+  if(value === 3) return nn3
+  if(value === 4) return nn4
+  if(value === 5) return nn5
+  if(value === 6) return nn6
+  if(value === 7) return nn7
+  if(value === 8) return nn8
+  if(value === 9) return nn9
+  return nn9
+}
+
 const hexToRgb = (hex: string | undefined) => {
   if (hex) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

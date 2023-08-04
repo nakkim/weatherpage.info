@@ -4,7 +4,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import React from "react";
 import { IResultData } from "../network/timeseries";
-import { resolveElement } from "../utils/map";
+import { resolveElement, resolveNNValue } from "../utils/map";
 import "leaflet-rotatedmarker";
 import arrow from "../assets/arrow.svg";
 
@@ -51,6 +51,20 @@ const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
                 />
               );
             } else if (paramValue) {
+              // symbol parameters
+              if (selectedParameter === "n_man")
+                return (
+                  <Marker
+                    position={[station.lat, station.lon]}
+                    icon={L.icon({
+                      iconUrl: resolveNNValue(paramValue), // TODO: Fix this
+                      iconAnchor: [22, 12],
+                      popupAnchor: [0, 0],
+                      iconSize: [22, 22],
+                    })}
+                  />
+                );
+              // other nremal parameters
               const element = resolveElement(
                 selectedParameter,
                 paramValue as number

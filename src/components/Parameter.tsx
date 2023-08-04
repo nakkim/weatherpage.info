@@ -3,6 +3,7 @@ import React, { Dispatch } from "react";
 
 interface IProps {
   selectedParameter: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setSelectedParameter: Dispatch<React.SetStateAction<any>>;
 }
 

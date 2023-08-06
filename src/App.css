@@ -31,3 +31,15 @@
   position: 'relative';
   left: '-10px';
 }
+
+/* 
+  Reset some of the default styles from leaflet. Remember not 
+  to change leaflet classes. Instead add your own class
+*/
+.custom-icon {
+  width: 50px;
+  height: 50px;
+  background: transparent;
+  border: none;
+  position: relative;
+}

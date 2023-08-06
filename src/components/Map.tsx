@@ -4,9 +4,11 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import React from "react";
 import { IResultData } from "../network/timeseries";
-import { resolveElement, resolveNNValue } from "../utils/map";
+import { resolveElement } from "../utils/map";
 import "leaflet-rotatedmarker";
 import arrow from "../assets/arrow.svg";
+import CloudCover from "./CloudCover";
+import * as ReactDOMServer from "react-dom/server";
 
 interface IProps {
   data: IResultData[];
@@ -46,25 +48,29 @@ const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
                     iconAnchor: [0, 0],
                     html: element,
                     iconSize: [0, 0],
-                    className: "leaflet-div-icon-none",
+                    className: "custom-icon",
                   })}
                 />
               );
-            } else if (paramValue) {
+            } else if (paramValue !== null) {
               // symbol parameters
               if (selectedParameter === "n_man")
                 return (
-                  <Marker
-                    position={[station.lat, station.lon]}
-                    icon={L.icon({
-                      iconUrl: resolveNNValue(paramValue), // TODO: Fix this
-                      iconAnchor: [22, 12],
-                      popupAnchor: [0, 0],
-                      iconSize: [22, 22],
-                    })}
-                  />
+                  <React.Fragment key={`${station?.fmisid}`}>
+                    <Marker
+                      position={[station.lat, station.lon]}
+                      icon={L.divIcon({
+                        iconAnchor: [30, 20],
+                        iconSize: [0, 0],
+                        html: ReactDOMServer.renderToString(
+                          <CloudCover value={paramValue} />
+                        ),
+                        className: "leaflet-div-icon-none",
+                      })}
+                    />
+                  </React.Fragment>
                 );
-              // other nremal parameters
+              // other parameters
               const element = resolveElement(
                 selectedParameter,
                 paramValue as number

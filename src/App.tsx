@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { IResultData, getTimeseriesData } from "./network/timeseries";
 import Parameter from "./components/Parameter";
+import Version from "./components/Version";
 
 function App() {
   const [data, setData] = useState<IResultData[]>([]);
@@ -72,6 +73,7 @@ function App() {
         setSelectedParameter={setSelectedParameter}
       />
       <Map key={1} data={data} selectedParameter={selectedParameter} />
+      <Version />
     </>
   );
 }

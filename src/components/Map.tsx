@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
+// eslint-disable-next-line simple-import-sort/imports
 import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 import "leaflet-rotatedmarker";
 
-import L from "leaflet";
 import React from "react";
 import * as ReactDOMServer from "react-dom/server";
 import { MapContainer, Marker,TileLayer } from "react-leaflet";

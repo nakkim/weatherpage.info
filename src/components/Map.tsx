@@ -1,14 +1,16 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
-import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import "leaflet-rotatedmarker";
+
+import L from "leaflet";
 import React from "react";
+import * as ReactDOMServer from "react-dom/server";
+import { MapContainer, Marker,TileLayer } from "react-leaflet";
+
+import arrow from "../assets/arrow.svg";
 import { IResultData } from "../network/timeseries";
 import { resolveElement } from "../utils/map";
-import "leaflet-rotatedmarker";
-import arrow from "../assets/arrow.svg";
 import CloudCover from "./CloudCover";
-import * as ReactDOMServer from "react-dom/server";
 
 interface IProps {
   data: IResultData[];

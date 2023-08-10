@@ -1,10 +1,10 @@
+import "react-datepicker/dist/react-datepicker.css";
+
+import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
+import { Box, Button } from "@mui/material";
 import * as React from "react";
 import { Dispatch, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
-import { Box, Button } from "@mui/material";
-import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
-
-import "react-datepicker/dist/react-datepicker.css";
 
 interface IProps {
   obsTime?: Date | undefined;

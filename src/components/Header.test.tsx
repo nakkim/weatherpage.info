@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await */
-import { describe, it, vi, expect, beforeEach } from "vitest";
-import {
-  render,
-  fireEvent,
-} from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import Header from "./Header";
 

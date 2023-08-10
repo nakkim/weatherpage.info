@@ -1,11 +1,12 @@
-import Map from "./components/Map";
 import "./App.css";
+
+import { useEffect,useState  } from "react";
+
 import Header from "./components/Header";
-import { useState } from "react";
-import { useEffect } from "react";
-import { IResultData, getTimeseriesData } from "./network/timeseries";
+import Map from "./components/Map";
 import Parameter from "./components/Parameter";
 import Version from "./components/Version";
+import { getTimeseriesData,IResultData } from "./network/timeseries";
 
 function App() {
   const [data, setData] = useState<IResultData[]>([]);

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await */
-import { describe, it } from "vitest";
 import { render } from "@testing-library/react";
+import { describe, it } from "vitest";
 
 // To Test
 import App from "./App";

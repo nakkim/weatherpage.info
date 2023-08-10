@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await */
-import { describe, it, expect } from "vitest";
+import { describe, expect,it } from "vitest";
+
 import { resolveElementColor } from "./map";
 
 describe("Test map utility functions", async () => {

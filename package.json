@@ -9,6 +9,7 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives",
     "preview": "vite preview",
     "test": "vitest --config ./vite.config.ts",
+    "pre-push": "vitest --config ./vite.config.ts run",
     "coverage": "vitest --config ./vite.config.ts run --coverage",
     "prepare": "husky install"
   },

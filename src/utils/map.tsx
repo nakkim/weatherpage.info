@@ -113,6 +113,129 @@ export const resolveElementColor = (param: string, value: number) => {
   }
 };
 
+export const resolveWawaElement = (value: number) => {
+  if (value === 0)
+    return {
+      short: "FairWeather",
+      backgroundColor: "#ffffff",
+      color: "#7e7e7e",
+    };
+  if (value === 10)
+    return {
+      short: "Haze",
+      backgroundColor: "#000000",
+      color: "#ffffff",
+    };
+  if (value === 20)
+    return {
+      short: "Fog",
+      backgroundColor: "#000000",
+      color: "#ffffff",
+    };
+  if (value === 21)
+    return {
+      short: "Rain",
+      backgroundColor: "#000000",
+      color: "#00b430",
+    };
+  if (value === 22)
+    return {
+      short: "Drizzle",
+      backgroundColor: "#000000",
+      color: "#ffffb3",
+    };
+  if (value === 23)
+    return {
+      short: "Rain",
+      backgroundColor: "#000000",
+      color: "#00b430",
+    };
+  if (value === 24)
+    return {
+      short: "Snow",
+      backgroundColor: "#000000",
+      color: "#9cc3fc",
+    };
+  if (value === 25)
+    return {
+      short: "FreezingRain",
+      backgroundColor: "#000000",
+      color: "#ff80df",
+    };
+  if (value >= 30 && value <= 33)
+    return {
+      short: "Fog",
+      backgroundColor: "#000000",
+      color: "#ffffff",
+    };
+  if (value >= 40 && value <= 42)
+    return {
+      short: "Rain",
+      backgroundColor: "#000000",
+      color: "#00b430",
+    };
+
+  if (value >= 50 && value <= 53)
+    return {
+      short: "Drizzle",
+      backgroundColor: "#000000",
+      color: "#ffffb3",
+    };
+  if (value >= 54 && value <= 56)
+    return {
+      short: "FreezingDrizzle",
+      backgroundColor: "#000000",
+      color: "#ff80df",
+    };
+  if (value >= 60 && value <= 63)
+    return {
+      short: "Rain",
+      backgroundColor: "#000000",
+      color: "#00b430",
+    };
+  if (value >= 64 && value <= 67)
+    return {
+      short: "FreezingRain",
+      backgroundColor: "#000000",
+      color: "#ff80df",
+    };
+  if (value === 68)
+    return {
+      short: "Sleet",
+      backgroundColor: "#000000",
+      color: "#ffbf80",
+    };
+  if (value >= 70 && value <= 78)
+    return {
+      short: "Snow",
+      backgroundColor: "#000000",
+      color: "#9cc3fc",
+    };
+  if (value >= 80 && value <= 84)
+    return {
+      short: "RainShovers",
+      backgroundColor: "#000000",
+      color: "#6dff94",
+    };
+  if (value >= 85 && value <= 87)
+    return {
+      short: "SnowShovers",
+      backgroundColor: "#000000",
+      color: "#3d8bff",
+    };
+  if (value === 89)
+    return {
+      short: "Hail",
+      backgroundColor: "#ffffb3",
+      color: "#ffffb3",
+    };
+  return {
+    short: "FairWeather",
+    backgroundColor: "#ffffff",
+    color: "#7e7e7e",
+  };
+};
+
 export const resolveElement = (param: string, value: number | string) => {
   const styles = {
     element: {
@@ -128,20 +251,35 @@ export const resolveElement = (param: string, value: number | string) => {
     },
   };
   const element: HTMLElement = document.createElement("span");
-  element.innerText = typeof value === "string" ? value : value.toFixed(1);
 
-  if (typeof value === "number")
-    Object.assign(element.style, {
-      ...styles.element,
-      backgroundColor: `rgba(${hexToRgb(
-        resolveElementColor(param, value)
-      )},0.7)`,
-    });
-  else
-    Object.assign(element.style, {
-      ...styles.element,
-      ...{ color: "black", border: "none" },
-    });
+  // resolve element background color
+  if (typeof value === "number") {
+    const elementStyle = resolveElementColor(param, value);
+    const WawaStyle = resolveWawaElement(value);
+    if (param === "wawa")
+      Object.assign(element.style, {
+        ...styles.element,
+        color: WawaStyle?.color,
+        left: "7px",
+        bottom: "25px",
+        fontSize: "11px",
+        backgroundColor:
+          WawaStyle?.backgroundColor === "#ffffff"
+            ? `rgba(${hexToRgb(WawaStyle?.backgroundColor)},0.2)`
+            : `rgba(${hexToRgb(WawaStyle?.backgroundColor)},0.7)`,
+      });
+    else
+      Object.assign(element.style, {
+        ...styles.element,
+        backgroundColor: `rgba(${hexToRgb(elementStyle)},0.7)`,
+      });
+  }
+
+  if (param === "wawa") {
+    const val = resolveWawaElement(value as number);
+    if (typeof val === "object") element.innerText = val.short;
+  } else
+    element.innerText = typeof value === "string" ? value : value.toFixed(1);
 
   return element;
 };

@@ -6,11 +6,11 @@ import "leaflet-rotatedmarker";
 
 import React from "react";
 import * as ReactDOMServer from "react-dom/server";
-import { MapContainer, Marker,TileLayer } from "react-leaflet";
+import { CircleMarker, MapContainer, Marker, TileLayer } from "react-leaflet";
 
 import arrow from "../assets/arrow.svg";
 import { IResultData } from "../network/timeseries";
-import { resolveElement } from "../utils/map";
+import { resolveElement, resolveWawaElement } from "../utils/map";
 import CloudCover from "./CloudCover";
 
 interface IProps {
@@ -38,6 +38,9 @@ const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
       {data &&
         data.map((station: IResultData) => {
           const paramValue = station[selectedParameter as keyof IResultData];
+          const fillValue = (resolveWawaElement(paramValue as number))
+          if(fillValue.color === '#7e7e7e') fillValue.color = 'rgba(126, 126, 126, 0.1)'
+
           if (station.lat && station.lon) {
             if (
               allowMissingValueParameters.includes(selectedParameter) &&
@@ -91,6 +94,16 @@ const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
                         : "leaflet-div-icon-none",
                     })}
                   />
+                  {selectedParameter === "wawa" && (
+                    <CircleMarker
+                      center={[station.lat, station.lon]}
+                      color="black"
+                      weight={2}
+                      radius={6}
+                      fillColor={fillValue.color}
+                      fillOpacity={1}
+                    />
+                  )}
                   {displayArrowIcon && (
                     <>
                       <Marker

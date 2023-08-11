@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { describe, expect, it } from "vitest";
 
-import { resolveElement, resolveElementColor } from "./map";
+import { resolveElement, resolveElementColor, resolveWawaElement } from "./map";
 
 describe("Test map utility functions", async () => {
   it("should should return correct hex code for temperature", async () => {
@@ -31,8 +31,36 @@ describe("Test map utility functions", async () => {
     expect(element.style.backgroundColor).toBe("rgba(138, 121, 247, 0.7)");
   });
 
-  it.skip('should not apply background color to span element when value is NaN', () => {
-    const element = resolveElement('param', NaN);
-    expect(element.style.backgroundColor).toBe('');
+  it.skip("should not apply background color to span element when value is NaN", () => {
+    const element = resolveElement("param", NaN);
+    expect(element.style.backgroundColor).toBe("");
+  });
+
+  // Tests that the function returns the correct object for a value of 0
+  it("should return the correct object for a value wawa code = 10", () => {
+    const result = resolveWawaElement(10);
+    expect(result).toEqual({
+      short: "Haze",
+      backgroundColor: "#000000",
+      color: "#ffffff",
+    });
+  });
+
+  it("should return the correct object for a value wawa code = 89", () => {
+    const result = resolveWawaElement(89);
+    expect(result).toEqual({
+      short: "Hail",
+      backgroundColor: "#ffffb3",
+      color: "#ffffb3",
+    });
+  });
+
+  it("should return default object for negative value", () => {
+    const result = resolveWawaElement(-1);
+    expect(result).toEqual({
+      short: "FairWeather",
+      backgroundColor: "#ffffff",
+      color: "#7e7e7e",
+    });
   });
 });

@@ -66,7 +66,7 @@ const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
                     <Marker
                       position={[station.lat, station.lon]}
                       icon={L.divIcon({
-                        iconAnchor: [30, 20],
+                        iconAnchor: [10, 10],
                         iconSize: [0, 0],
                         html: ReactDOMServer.renderToString(
                           <CloudCover value={paramValue} />

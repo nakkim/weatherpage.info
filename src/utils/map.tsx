@@ -110,6 +110,20 @@ export const resolveElementColor = (param: string, value: number) => {
       if (value > 20.0 && value <= 30.0) return "#fc8d59";
       if (value > 30.0) return "#d73027";
       return "#d73027";
+
+    case "snow_aws":
+      if (value > 0 && value <= 10) return "#bfe6ff";
+      if (value > 10 && value <= 20) return "#8dcdff";
+      if (value > 20 && value <= 40) return "#3c9dde";
+      if (value > 40 && value <= 60) return "#3972bf";
+      if (value > 60 && value <= 80) return "#6185c0";
+      if (value > 80 && value <= 100) return "#8898c2";
+      if (value > 100 && value <= 125) return "#8e6bb0";
+      if (value > 125 && value <= 150) return "#863e97";
+      if (value > 150 && value <= 175) return "#7e117e";
+      if (value > 175 && value <= 200) return "#5b106f";
+      if (value > 200) return "#ebdaf0";
+      return "#bfe6ff";
   }
 };
 
@@ -250,7 +264,11 @@ export const resolveElement = (param: string, value: number | string) => {
       width: "20px",
     },
   };
+
   const element: HTMLElement = document.createElement("span");
+
+  // expetions
+  if (param === "snow_aws" && value === -1) return element;
 
   // resolve element background color
   if (typeof value === "number") {

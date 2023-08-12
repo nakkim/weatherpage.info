@@ -33,16 +33,6 @@ describe("Test map utility functions", async () => {
       const element = resolveElement("dewpoint", -30);
       expect(element.style.backgroundColor).toBe("rgba(138, 121, 247, 0.7)");
     });
-
-    // Tests that the function returns the correct object for a value of 0
-    it("should return the correct object for a value wawa code = 10", () => {
-      const result = resolveWawaElement(10);
-      expect(result).toEqual({
-        short: "Haze",
-        backgroundColor: "#000000",
-        color: "#ffffff",
-      });
-    });
   });
 
   describe("Test resolveWawaElement function", async () => {
@@ -61,6 +51,16 @@ describe("Test map utility functions", async () => {
         short: "FairWeather",
         backgroundColor: "#ffffff",
         color: "#7e7e7e",
+      });
+    });
+
+    // Tests that the function returns the correct object for a value of 0
+    it("should return the correct object for a value wawa code = 10", () => {
+      const result = resolveWawaElement(10);
+      expect(result).toEqual({
+        short: "Haze",
+        backgroundColor: "#000000",
+        color: "#ffffff",
       });
     });
   });

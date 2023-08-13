@@ -15,37 +15,11 @@ function App() {
   const [selectedParameter, setSelectedParameter] = useState<string>("ws_10min");
 
   const getData = () => {
-    const urlParameters = [
-      "stationname as name",
-      "lat",
-      "lon",
-      "distance",
-      "region",
-      "fmisid",
-      "utctime as time",
-      "ri_10min",
-      "ws_10min",
-      "wg_10min",
-      "wd_10min",
-      "vis",
-      "wawa",
-      "t2m",
-      "n_man",
-      "r_1h",
-      "snow_aws",
-      "pressure",
-      "rh",
-      "dewpoint",
-    ];
-
     if (timeValue === "now")
-      void getTimeseriesData(urlParameters, setData, "10");
+      void getTimeseriesData(setData);
     else
       void getTimeseriesData(
-        urlParameters,
         setData,
-        "10",
-        timeValue,
         timeValue
       );
   };

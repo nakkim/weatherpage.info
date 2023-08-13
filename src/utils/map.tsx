@@ -54,6 +54,19 @@ export const resolveElementColor = (param: string, value: number) => {
       if (value >= 30) return "#eb0052";
       return "#8aedbb";
 
+    case "t2mtdew":
+      if (value < -4) return "#053061";
+      if (value >= -4 && value < -2) return "#2166ac";
+      if (value >= -2 && value < -1) return "#4393c3";
+      if (value >= -1 && value < -0.5) return "#92c5de";
+      if (value >= -0.5 && value < 0) return "#d1e5f0";
+      if (value >= 0 && value < 1) return "#f7f7f7";
+      if (value >= 1 && value < 2) return "#fddbc7";
+      if (value >= 2 && value < 4) return "#f4a582";
+      if (value >= 4 && value < 8) return "#d6604d";
+      if (value >= 8) return "#b2182b";
+      return "#f7f7f7";
+
     case "rh":
       if (value >= 0 && value < 50) return "#f7fbff";
       if (value >= 50 && value < 60) return "#deebf7";
@@ -94,7 +107,8 @@ export const resolveElementColor = (param: string, value: number) => {
       return "#5e4fa2";
 
     case "ri_10min":
-      if (value > 0 && value <= 0.1) return "#fff7fb";
+    case "r_1d":
+      if (value >= 0 && value <= 0.1) return "#fff7fb";
       if (value > 0.1 && value <= 0.2) return "#ece7f2";
       if (value > 0.2 && value <= 0.3) return "#d0d1e6";
       if (value > 0.3 && value <= 0.4) return "#a6bddb";

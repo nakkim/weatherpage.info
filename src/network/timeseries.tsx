@@ -16,59 +16,28 @@ export interface IResultData {
   t2m?: number;
   n_man?: number;
   r_1h?: number;
+  r_1d?: number;
   snow_aws?: number;
   pressure?: number;
   rh?: number;
   dewpoint?: number;
-}
-
-export interface IRequestParameters {
-  endtime?: string;
-  format: string;
-  geoid?: number;
-  keyword?: string;
-  maxdistance?: string;
-  missingvalue: string;
-  param: string;
-  precision: string;
-  producer: string;
-  starttime?: string;
-  timeformat: string;
-  timestep?: string;
-  tz: string;
+  t2mtdew?: number;
 }
 
 export const getTimeseriesData = async (
-  requestParameters: string[],
   setState: React.Dispatch<React.SetStateAction<any>>,
-  timestep: string,
-  startTime?: string,
-  endTime?: string,
-  geoid?: number,
+  time?: string,
 ): Promise<any> => {
 
-  const urlParams: IRequestParameters = {
-    endtime: endTime ? endTime : 'now',
-    format: 'json',
-    missingvalue: '-',
-    ...(geoid
-      ? { geoid: geoid }
-      : { keyword: 'synop_fi', }),
-    param: requestParameters.toString(),
-    precision: 'double',
-    producer: 'opendata',
-    ...(startTime && {
-      starttime: startTime,
-      timestep: timestep,
-    }),
-    timeformat: 'xml',
-    tz: 'UTC',
-  };
+  // const requestUrl = `https://opendata.fmi.fi/timeseries?${new URLSearchParams(
+  //   urlParams as unknown as string,
+  // )}`;
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const apiUrl = import.meta.env.PROD ? import.meta.env.VITE_API_URL : 'http://localhost:3000'
 
   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-  const requestUrl = `https://opendata.fmi.fi/timeseries?${new URLSearchParams(
-    urlParams as unknown as string,
-  )}`;
+  const requestUrl = time ? `${apiUrl}/observation?time=${time}` : `${apiUrl}/observation/now`;
 
   await fetch(requestUrl)
     .then((result) => result?.json() as Promise<IResultData[]>)

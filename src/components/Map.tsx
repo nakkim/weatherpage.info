@@ -20,7 +20,7 @@ interface IProps {
 
 const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
   const windParameters = ["ws_10min", "wg_10min"];
-  const allowMissingValueParameters = ["ri_10min"];
+  const allowMissingValueParameters = ["ri_10min", "r_1d"];
   const displayArrowIcon = windParameters.includes(selectedParameter);
 
   return (

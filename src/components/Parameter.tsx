@@ -47,6 +47,9 @@ const Parameter: React.FC<IProps> = ({
         <MenuItem value={"dewpoint"} selected>
           Kastepiste
         </MenuItem>
+        <MenuItem value={"t2mtdew"} selected>
+          Kastepiste-ero
+        </MenuItem>
         <MenuItem value={"rh"} selected>
           Suhteellinen kosteus
         </MenuItem>
@@ -64,6 +67,9 @@ const Parameter: React.FC<IProps> = ({
         </MenuItem>
         <MenuItem value={"snow_aws"} selected>
           Lumensyvyys
+        </MenuItem>
+        <MenuItem value={"r_1d"} selected>
+          Vrk:n sadekertymä
         </MenuItem>
       </Select>
     </Box>

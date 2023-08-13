@@ -3,6 +3,10 @@
     {
       "splitTerminals": [
         {
+          "name": "backend",
+          "commands": ["cd ../weathermap-api && npm run watch"]
+        },
+        {
           "name": "unit tests",
           "commands": ["npm run test"]
         },

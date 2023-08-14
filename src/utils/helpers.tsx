@@ -14,6 +14,7 @@ const hexToRgb = (hex: string | undefined) => {
     }
   }
 };
+
 export const resolveElementColor = (param: string, value: number) => {
   switch (param) {
     case "dewpoint":
@@ -108,6 +109,7 @@ export const resolveElementColor = (param: string, value: number) => {
 
     case "ri_10min":
     case "r_1d":
+    case "r_1h":
       if (value >= 0 && value <= 0.1) return "#fff7fb";
       if (value > 0.1 && value <= 0.2) return "#ece7f2";
       if (value > 0.2 && value <= 0.3) return "#d0d1e6";

@@ -74,7 +74,7 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
             showTimeSelect
             title="jeejee"
             onChange={(date) => {
-              if (date) setTime(date?.toISOString());
+              if (date) setTime(date?.toISOString().split('.')[0]+"Z");
               setStartDate(date);
             }}
             maxDate={new Date()}

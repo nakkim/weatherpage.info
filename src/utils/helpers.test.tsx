@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { describe, expect, it } from "vitest";
 
-import { resolveElement, resolveElementColor, resolveWawaElement } from "./map";
+import { resolveElement, resolveElementColor, resolveWawaElement } from "./helpers";
 
 describe("Test map utility functions", async () => {
   describe("Test resolveElementColor function", async () => {

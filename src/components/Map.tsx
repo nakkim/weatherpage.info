@@ -10,7 +10,7 @@ import { CircleMarker, MapContainer, Marker, TileLayer } from "react-leaflet";
 
 import arrow from "../assets/arrow.svg";
 import { IResultData } from "../network/timeseries";
-import { resolveElement, resolveWawaElement } from "../utils/map";
+import { resolveElement, resolveWawaElement } from "../utils/helpers";
 import CloudCover from "./CloudCover";
 
 interface IProps {
@@ -20,7 +20,7 @@ interface IProps {
 
 const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
   const windParameters = ["ws_10min", "wg_10min"];
-  const allowMissingValueParameters = ["ri_10min", "r_1d"];
+  const allowMissingValueParameters = ["ri_10min", "r_1d", "r_1h"];
   const displayArrowIcon = windParameters.includes(selectedParameter);
 
   return (

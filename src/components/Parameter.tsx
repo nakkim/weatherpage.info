@@ -59,6 +59,9 @@ const Parameter: React.FC<IProps> = ({
         <MenuItem value={"ri_10min"} selected>
           Sateen intensiteetti
         </MenuItem>
+        <MenuItem value={"r_1h"} selected>
+          Tunnin sadekertymä
+        </MenuItem>
         <MenuItem value={"n_man"} selected>
           Kokonaispilvisyys
         </MenuItem>

@@ -41,7 +41,7 @@ const Map: React.FC<IProps> = ({ data, selectedParameter, isLoading }) => {
           pointerEvents: 'none',
           userSelect: 'none',
         }}
-        colors={["#d0d1e6", "#a6bddb", "#74a9cf", "#3690c0", '#0570b0']}
+        colors={["rgba(25,118,210,1)", "rgba(25,118,210,0.75)", "rgba(25,118,210,0.5)", "rgba(25,118,210,0.25)", 'rgba(25,118,210,0.05)']}
       />}
       <MapContainer
         center={[63.7, 26.0]}
@@ -51,8 +51,8 @@ const Map: React.FC<IProps> = ({ data, selectedParameter, isLoading }) => {
         preferCanvas={true}
       >
         <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
         />
         {data &&
           data.map((station: IResultData) => {

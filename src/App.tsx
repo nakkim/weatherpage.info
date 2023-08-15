@@ -27,10 +27,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(isLoading)
-  }, [isLoading])
-
-  useEffect(() => {
     getData();
 
     const interval = setInterval(() => {

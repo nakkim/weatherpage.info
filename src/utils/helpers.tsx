@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 
+export const debug = (string: string) => {
+  const date = new Date()
+  if(import.meta.env.VITE_API_URL)
+  console.info(`${date.toLocaleString()}: ${string}`)
+}
+
 const hexToRgb = (hex: string | undefined) => {
   if (hex) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

@@ -26,6 +26,7 @@ export interface IResultData {
 
 export const getTimeseriesData = async (
   setState: React.Dispatch<React.SetStateAction<any>>,
+  setIsLoading: React.Dispatch<React.SetStateAction<any>>,
   time?: string,
 ): Promise<any> => {
 
@@ -38,14 +39,16 @@ export const getTimeseriesData = async (
 
   // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
   const requestUrl = time ? `${apiUrl}/observation?time=${time}` : `${apiUrl}/observation/now`;
-
+  setIsLoading(true)
   await fetch(requestUrl)
     .then((result) => result?.json() as Promise<IResultData[]>)
     .then((result) => {
       setState(result || []);
+      setIsLoading(false)
     })
     .catch(() => {
       setState([]);
+      setIsLoading(false)
     });
 };
 

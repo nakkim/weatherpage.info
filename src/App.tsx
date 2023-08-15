@@ -1,28 +1,34 @@
 import "./App.css";
 
-import { useEffect,useState  } from "react";
+import { useEffect, useState } from "react";
 
 import Header from "./components/Header";
 import Map from "./components/Map";
 import Parameter from "./components/Parameter";
 import Version from "./components/Version";
-import { getTimeseriesData,IResultData } from "./network/timeseries";
+import { getTimeseriesData, IResultData } from "./network/timeseries";
 
 function App() {
   const [data, setData] = useState<IResultData[]>([]);
   const [obsTime, setObsTime] = useState<Date | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [timeValue, setTimeValue] = useState<string | undefined>("now");
-  const [selectedParameter, setSelectedParameter] = useState<string>("ws_10min");
+  const [selectedParameter, setSelectedParameter] =
+    useState<string>("ws_10min");
 
   const getData = () => {
-    if (timeValue === "now")
-      void getTimeseriesData(setData);
-    else
-      void getTimeseriesData(
-        setData,
-        timeValue
-      );
+    if (timeValue === "now") {
+      setData([]);
+      void getTimeseriesData(setData, setIsLoading);
+    } else {
+      setData([]);
+      void getTimeseriesData(setData, setIsLoading, timeValue);
+    }
   };
+
+  useEffect(() => {
+    console.log(isLoading)
+  }, [isLoading])
 
   useEffect(() => {
     getData();
@@ -33,7 +39,7 @@ function App() {
       }
     }, 5 * 60000);
     return () => clearInterval(interval);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeValue]);
 
   useEffect(() => {
@@ -47,7 +53,7 @@ function App() {
         selectedParameter={selectedParameter}
         setSelectedParameter={setSelectedParameter}
       />
-      <Map key={1} data={data} selectedParameter={selectedParameter} />
+      <Map key={1} data={data} selectedParameter={selectedParameter} isLoading={isLoading} />
       <Version />
     </>
   );

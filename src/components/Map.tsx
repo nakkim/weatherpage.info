@@ -4,6 +4,8 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet-rotatedmarker";
 
+import { ColorRing } from "react-loader-spinner";
+
 import React from "react";
 import * as ReactDOMServer from "react-dom/server";
 import { CircleMarker, MapContainer, Marker, TileLayer } from "react-leaflet";
@@ -16,124 +18,143 @@ import CloudCover from "./CloudCover";
 interface IProps {
   data: IResultData[];
   selectedParameter: string;
+  isLoading: boolean
 }
 
-const Map: React.FC<IProps> = ({ data, selectedParameter }) => {
+const Map: React.FC<IProps> = ({ data, selectedParameter, isLoading }) => {
   const windParameters = ["ws_10min", "wg_10min"];
   const allowMissingValueParameters = ["ri_10min", "r_1d", "r_1h"];
   const displayArrowIcon = windParameters.includes(selectedParameter);
 
   return (
-    <MapContainer
-      center={[63.7, 26.0]}
-      zoom={6}
-      scrollWheelZoom={true}
-      id="map"
-      preferCanvas={true}
-    >
-      <TileLayer
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      {data &&
-        data.map((station: IResultData) => {
-          const paramValue = station[selectedParameter as keyof IResultData];
-          const fillValue = (resolveWawaElement(paramValue as number))
-          if(fillValue.color === '#7e7e7e') fillValue.color = 'rgba(126, 126, 126, 0.1)'
+    <>
+      {isLoading && <ColorRing
+        visible={true}
+        height="200"
+        width="200"
+        ariaLabel="blocks-loading"
+        wrapperStyle={{
+          position: "fixed",
+          top: "calc(50% - 100px)",
+          left: "calc(50% - 100px)",
+          zIndex: '30000',
+          pointerEvents: 'none',
+          userSelect: 'none',
+        }}
+        colors={["#d0d1e6", "#a6bddb", "#74a9cf", "#3690c0", '#0570b0']}
+      />}
+      <MapContainer
+        center={[63.7, 26.0]}
+        zoom={6}
+        scrollWheelZoom={true}
+        id="map"
+        preferCanvas={true}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        {data &&
+          data.map((station: IResultData) => {
+            const paramValue = station[selectedParameter as keyof IResultData];
+            const fillValue = resolveWawaElement(paramValue as number);
+            if (fillValue.color === "#7e7e7e")
+              fillValue.color = "rgba(126, 126, 126, 0.1)";
 
-          if (station.lat && station.lon) {
-            if (
-              allowMissingValueParameters.includes(selectedParameter) &&
-              !paramValue
-            ) {
-              const element = resolveElement(selectedParameter, "-");
-              return (
-                <Marker
-                  position={[station.lat, station.lon]}
-                  icon={L.divIcon({
-                    iconAnchor: [0, 0],
-                    html: element,
-                    iconSize: [0, 0],
-                    className: "custom-icon",
-                  })}
-                />
-              );
-            } else if (paramValue !== null) {
-              // symbol parameters
-              if (selectedParameter === "n_man")
+            if (station.lat && station.lon) {
+              if (
+                allowMissingValueParameters.includes(selectedParameter) &&
+                !paramValue
+              ) {
+                const element = resolveElement(selectedParameter, "-");
+                return (
+                  <Marker
+                    position={[station.lat, station.lon]}
+                    icon={L.divIcon({
+                      iconAnchor: [0, 0],
+                      html: element,
+                      iconSize: [0, 0],
+                      className: "custom-icon",
+                    })}
+                  />
+                );
+              } else if (paramValue !== null) {
+                // symbol parameters
+                if (selectedParameter === "n_man")
+                  return (
+                    <React.Fragment key={`${station?.fmisid}`}>
+                      <Marker
+                        position={[station.lat, station.lon]}
+                        icon={L.divIcon({
+                          iconAnchor: [10, 10],
+                          iconSize: [0, 0],
+                          html: ReactDOMServer.renderToString(
+                            <CloudCover value={paramValue} />
+                          ),
+                          className: "leaflet-div-icon-none",
+                        })}
+                      />
+                    </React.Fragment>
+                  );
+                // other parameters
+                const element = resolveElement(
+                  selectedParameter,
+                  paramValue as number
+                );
                 return (
                   <React.Fragment key={`${station?.fmisid}`}>
                     <Marker
                       position={[station.lat, station.lon]}
                       icon={L.divIcon({
-                        iconAnchor: [10, 10],
-                        iconSize: [0, 0],
-                        html: ReactDOMServer.renderToString(
-                          <CloudCover value={paramValue} />
-                        ),
-                        className: "leaflet-div-icon-none",
+                        iconAnchor: displayArrowIcon ? [10, 0] : [0, 0],
+                        html: element,
+                        iconSize: displayArrowIcon ? [20, 18] : [0, 0],
+                        className: displayArrowIcon
+                          ? "leaflet-div-icon-wind"
+                          : "leaflet-div-icon-none",
                       })}
                     />
+                    {selectedParameter === "wawa" && (
+                      <CircleMarker
+                        center={[station.lat, station.lon]}
+                        color="black"
+                        weight={2}
+                        radius={6}
+                        fillColor={fillValue.color}
+                        fillOpacity={1}
+                      />
+                    )}
+                    {displayArrowIcon && (
+                      <>
+                        <Marker
+                          position={[station.lat, station.lon]}
+                          icon={L.divIcon({
+                            iconAnchor: [-10, 1],
+                            html: element,
+                            iconSize: [0, 0],
+                            className: "leaflet-div-icon-none",
+                          })}
+                        />
+                        <Marker
+                          position={[station.lat, station.lon]}
+                          rotationAngle={station["wd_10min"]}
+                          rotationOrigin="center"
+                          icon={L.icon({
+                            iconUrl: arrow,
+                            iconAnchor: [22, 12],
+                            popupAnchor: [0, 0],
+                            iconSize: [45, 45],
+                          })}
+                        />
+                      </>
+                    )}
                   </React.Fragment>
                 );
-              // other parameters
-              const element = resolveElement(
-                selectedParameter,
-                paramValue as number
-              );
-              return (
-                <React.Fragment key={`${station?.fmisid}`}>
-                  <Marker
-                    position={[station.lat, station.lon]}
-                    icon={L.divIcon({
-                      iconAnchor: displayArrowIcon ? [10, 0] : [0, 0],
-                      html: element,
-                      iconSize: displayArrowIcon ? [20, 18] : [0, 0],
-                      className: displayArrowIcon
-                        ? "leaflet-div-icon-wind"
-                        : "leaflet-div-icon-none",
-                    })}
-                  />
-                  {selectedParameter === "wawa" && (
-                    <CircleMarker
-                      center={[station.lat, station.lon]}
-                      color="black"
-                      weight={2}
-                      radius={6}
-                      fillColor={fillValue.color}
-                      fillOpacity={1}
-                    />
-                  )}
-                  {displayArrowIcon && (
-                    <>
-                      <Marker
-                        position={[station.lat, station.lon]}
-                        icon={L.divIcon({
-                          iconAnchor: [-10, 1],
-                          html: element,
-                          iconSize: [0, 0],
-                          className: "leaflet-div-icon-none",
-                        })}
-                      />
-                      <Marker
-                        position={[station.lat, station.lon]}
-                        rotationAngle={station["wd_10min"]}
-                        rotationOrigin="center"
-                        icon={L.icon({
-                          iconUrl: arrow,
-                          iconAnchor: [22, 12],
-                          popupAnchor: [0, 0],
-                          iconSize: [45, 45],
-                        })}
-                      />
-                    </>
-                  )}
-                </React.Fragment>
-              );
+              }
             }
-          }
-        })}
-    </MapContainer>
+          })}
+      </MapContainer>
+    </>
   );
 };
 

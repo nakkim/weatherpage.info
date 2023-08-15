@@ -41,7 +41,7 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
   useEffect(() => {
     if (obsTime) {
       setStartDate(obsTime);
-      setTime(obsTime?.toISOString());
+      setTime(obsTime?.toISOString().split('.')[0]+"Z");
     }
   }, [obsTime]);
 

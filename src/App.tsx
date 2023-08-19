@@ -8,33 +8,42 @@ import Parameter from "./components/Parameter";
 import Version from "./components/Version";
 import { getTimeseriesData, IResultData } from "./network/timeseries";
 
+interface TimeProp {
+  time: string;
+}
+
 function App() {
   const [data, setData] = useState<IResultData[]>([]);
   const [obsTime, setObsTime] = useState<Date | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [timeValue, setTimeValue] = useState<string | undefined>("now");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [timeValue, setTimeValue] = useState<TimeProp | undefined>({
+    time: "now",
+  });
   const [selectedParameter, setSelectedParameter] =
     useState<string>("ws_10min");
 
   const getData = () => {
-    if (timeValue === "now") {
+    if (timeValue?.time === "now") {
       setData([]);
       void getTimeseriesData(setData, setIsLoading);
     } else {
       setData([]);
-      void getTimeseriesData(setData, setIsLoading, timeValue);
+      void getTimeseriesData(setData, setIsLoading, timeValue?.time);
     }
   };
 
   useEffect(() => {
-    getData();
+    console.log(timeValue);
+    if (timeValue) {
+      getData();
 
-    const interval = setInterval(() => {
-      if (timeValue === "now") {
-        getData();
-      }
-    }, 5 * 60000);
-    return () => clearInterval(interval);
+      const interval = setInterval(() => {
+        if (timeValue?.time === "now") {
+          getData();
+        }
+      }, 5 * 60000);
+      return () => clearInterval(interval);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeValue]);
 
@@ -49,7 +58,12 @@ function App() {
         selectedParameter={selectedParameter}
         setSelectedParameter={setSelectedParameter}
       />
-      <Map key={1} data={data} selectedParameter={selectedParameter} isLoading={isLoading} />
+      <Map
+        key={1}
+        data={data}
+        selectedParameter={selectedParameter}
+        isLoading={isLoading}
+      />
       <Version />
     </>
   );

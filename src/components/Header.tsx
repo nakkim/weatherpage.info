@@ -41,7 +41,7 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
   useEffect(() => {
     if (obsTime) {
       setStartDate(obsTime);
-      setTime(obsTime?.toISOString().split('.')[0]+"Z");
+      setTime(obsTime?.toISOString().split(".")[0] + "Z");
     }
   }, [obsTime]);
 
@@ -74,7 +74,7 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
             showTimeSelect
             title="jeejee"
             onChange={(date) => {
-              if (date) setTime(date?.toISOString().split('.')[0]+"Z");
+              if (date) setTime(date?.toISOString().split(".")[0] + "Z");
               setStartDate(date);
             }}
             maxDate={new Date()}
@@ -101,7 +101,7 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
             variant={isCurrent ? "outlined" : "contained"}
             onClick={() => {
               setIsCurrent(false);
-              if (setTimeValue) setTimeValue(time);
+              if (setTimeValue) setTimeValue({time});
             }}
           >
             Hae
@@ -112,7 +112,10 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
             variant={isCurrent ? "contained" : "outlined"}
             onClick={() => {
               setIsCurrent(true);
-              if (setTimeValue) setTimeValue("now");
+              if (setTimeValue) {
+                setTimeValue(undefined);
+                setTimeValue({time: "now"});
+              }
             }}
           >
             Nyt

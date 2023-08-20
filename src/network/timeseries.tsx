@@ -11,6 +11,10 @@ export interface IResultData {
   ws_10min?: number;
   wg_10min?: number;
   wd_10min?: number;
+  ws_1d?: number;
+  wg_1d?: number;
+  ws_max_dir: number;
+  wg_max_dir: number;
   vis?: number;
   wawa?: number;
   t2m?: number;
@@ -22,6 +26,8 @@ export interface IResultData {
   rh?: number;
   dewpoint?: number;
   t2mtdew?: number;
+  tmin?: number;
+  tmax?: number;
 }
 
 export const getTimeseriesData = async (

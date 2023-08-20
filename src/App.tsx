@@ -33,7 +33,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(timeValue);
     if (timeValue) {
       getData();
 

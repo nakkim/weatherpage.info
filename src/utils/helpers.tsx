@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 
 export const debug = (string: string) => {
-  const date = new Date()
-  if(import.meta.env.VITE_API_URL)
-  console.info(`${date.toLocaleString()}: ${string}`)
-}
+  const date = new Date();
+  if (import.meta.env.VITE_API_URL)
+    console.info(`${date.toLocaleString()}: ${string}`);
+};
 
 const hexToRgb = (hex: string | undefined) => {
   if (hex) {
@@ -25,6 +25,8 @@ export const resolveElementColor = (param: string, value: number) => {
   switch (param) {
     case "dewpoint":
     case "t2m":
+    case "tmin":
+    case "tmax":
       if (value < -30) return "#8a79f7";
       if (value >= -30 && value < -28) return "#8a79f7";
       if (value >= -28 && value < -26) return "#6e70e7";
@@ -88,6 +90,8 @@ export const resolveElementColor = (param: string, value: number) => {
 
     case "ws_10min":
     case "wg_10min":
+    case "ws_1d":
+    case "wg_1d":
       if (value < 1) return "#ffffff";
       if (value >= 1 && value < 2) return "#e6f7ff";
       if (value >= 2 && value < 7) return "#ccffcc";
@@ -112,6 +116,12 @@ export const resolveElementColor = (param: string, value: number) => {
       if (value >= 1025 && value < 1030) return "#3288bd";
       if (value > 1030) return "#5e4fa2";
       return "#5e4fa2";
+
+    case "vis":
+      if (value > 1000 && value <= 2000) return "rgba(1,1,1,0.15)";
+      else if (value < 1000) {
+        return "rgba(224,7,0,0.4)";
+      } else return "rgba(1,1,1,0.15)";
 
     case "ri_10min":
     case "r_1d":
@@ -303,6 +313,18 @@ export const resolveElement = (param: string, value: number | string) => {
         left: "7px",
         bottom: "25px",
         fontSize: "11px",
+        backgroundColor:
+          WawaStyle?.backgroundColor === "#ffffff"
+            ? `rgba(${hexToRgb(WawaStyle?.backgroundColor)},0.2)`
+            : `rgba(${hexToRgb(WawaStyle?.backgroundColor)},0.7)`,
+      });
+    else if (param === "vis")
+      Object.assign(element.style, {
+        ...styles.element,
+        color: value >= 2000 ? 'grey' : (value <= 2000 && value > 1000 ? 'black' : 'rgb(130, 1, 1)'),
+        left: "7px",
+        bottom: "25px",
+        fontSize: "15px",
         backgroundColor:
           WawaStyle?.backgroundColor === "#ffffff"
             ? `rgba(${hexToRgb(WawaStyle?.backgroundColor)},0.2)`

@@ -18,31 +18,47 @@ import CloudCover from "./CloudCover";
 interface IProps {
   data: IResultData[];
   selectedParameter: string;
-  isLoading: boolean
+  isLoading: boolean;
 }
 
 const Map: React.FC<IProps> = ({ data, selectedParameter, isLoading }) => {
-  const windParameters = ["ws_10min", "wg_10min"];
+  const windParameters = ["ws_10min", "wg_10min", "ws_1d", "wg_1d"];
   const allowMissingValueParameters = ["ri_10min", "r_1d", "r_1h"];
   const displayArrowIcon = windParameters.includes(selectedParameter);
 
+  const arrowDirection =
+    // eslint-disable-next-line no-constant-condition
+    selectedParameter === "ws_10min" || "wg_10min"
+      ? "wd_10min"
+      : selectedParameter === "ws_1d"
+      ? "ws_max_dir"
+      : "wg_max_dir";
+
   return (
     <>
-      {isLoading && <ColorRing
-        visible={true}
-        height="200"
-        width="200"
-        ariaLabel="blocks-loading"
-        wrapperStyle={{
-          position: "fixed",
-          top: "calc(50% - 100px)",
-          left: "calc(50% - 100px)",
-          zIndex: '30000',
-          pointerEvents: 'none',
-          userSelect: 'none',
-        }}
-        colors={["rgba(25,118,210,1)", "rgba(25,118,210,0.75)", "rgba(25,118,210,0.5)", "rgba(25,118,210,0.25)", 'rgba(25,118,210,0.05)']}
-      />}
+      {isLoading && (
+        <ColorRing
+          visible={true}
+          height="200"
+          width="200"
+          ariaLabel="blocks-loading"
+          wrapperStyle={{
+            position: "fixed",
+            top: "calc(50% - 100px)",
+            left: "calc(50% - 100px)",
+            zIndex: "30000",
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+          colors={[
+            "rgba(25,118,210,1)",
+            "rgba(25,118,210,0.75)",
+            "rgba(25,118,210,0.5)",
+            "rgba(25,118,210,0.25)",
+            "rgba(25,118,210,0.05)",
+          ]}
+        />
+      )}
       <MapContainer
         center={[63.7, 26.0]}
         zoom={6}
@@ -137,7 +153,7 @@ const Map: React.FC<IProps> = ({ data, selectedParameter, isLoading }) => {
                         />
                         <Marker
                           position={[station.lat, station.lon]}
-                          rotationAngle={station["wd_10min"]}
+                          rotationAngle={station[arrowDirection]}
                           rotationOrigin="center"
                           icon={L.icon({
                             iconUrl: arrow,

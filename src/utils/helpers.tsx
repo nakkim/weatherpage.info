@@ -21,6 +21,17 @@ const hexToRgb = (hex: string | undefined) => {
   }
 };
 
+const getContrastYIQ = (hexColor: string | undefined) => {
+  if (hexColor) {
+    hexColor = hexColor.substring(1)
+    const r = parseInt(hexColor.substr(0, 2), 16);
+    const g = parseInt(hexColor.substr(2, 2), 16);
+    const b = parseInt(hexColor.substr(4, 2), 16);
+    const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+    return yiq >= 128 ? "black" : "white";
+  }
+};
+
 export const resolveElementColor = (param: string, value: number) => {
   switch (param) {
     case "dewpoint":
@@ -321,7 +332,12 @@ export const resolveElement = (param: string, value: number | string) => {
     else if (param === "vis")
       Object.assign(element.style, {
         ...styles.element,
-        color: value >= 2000 ? 'grey' : (value <= 2000 && value > 1000 ? 'black' : 'rgb(130, 1, 1)'),
+        color:
+          value >= 2000
+            ? "grey"
+            : value <= 2000 && value > 1000
+            ? "black"
+            : "rgb(130, 1, 1)",
         left: "7px",
         bottom: "25px",
         fontSize: "15px",
@@ -333,6 +349,7 @@ export const resolveElement = (param: string, value: number | string) => {
     else
       Object.assign(element.style, {
         ...styles.element,
+        color: getContrastYIQ(resolveElementColor(param, value)),
         backgroundColor: `rgba(${hexToRgb(elementStyle)},0.7)`,
       });
   }

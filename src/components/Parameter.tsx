@@ -72,19 +72,16 @@ const Parameter: React.FC<IProps> = ({
         <MenuItem value={"pressure"} selected>
           Ilmanpaine
         </MenuItem>
-        <MenuItem value={"r_1d"} selected>
-          Vrk:n sadekertymä
-        </MenuItem>
         <MenuItem value={"rh"} selected>
           Suhteellinen kosteus
         </MenuItem>
         <ListSubheader>Vuorokausiarvot</ListSubheader>
-        <MenuItem value={"ws_1d"}>Kovin keskituuli</MenuItem>
-        <MenuItem value={"wg_1d"}>Kovin puuska</MenuItem>
-        <MenuItem value={"tmax"} selected>
+        <MenuItem disabled value={"ws_1d"}>Kovin keskituuli</MenuItem>
+        <MenuItem disabled value={"wg_1d"}>Kovin puuska</MenuItem>
+        <MenuItem disabled value={"tmax"} selected>
           Ylin lämpötila
         </MenuItem>
-        <MenuItem value={"tmin"} selected>
+        <MenuItem disabled value={"tmin"} selected>
           Alin lämpötila
         </MenuItem>
       </Select>

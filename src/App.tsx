@@ -2,11 +2,16 @@ import "./App.css";
 
 import { useEffect, useState } from "react";
 
+import { updateInterval } from "../app.config";
 import Header from "./components/Header";
 import Map from "./components/Map";
 import Parameter from "./components/Parameter";
 import Version from "./components/Version";
-import { getTimeseriesData, IResultData } from "./network/timeseries";
+import {
+  getTimeseriesData,
+  getTimeValue,
+  IResultData,
+} from "./network/timeseries";
 
 interface TimeProp {
   time: string;
@@ -25,34 +30,35 @@ function App() {
   const getData = () => {
     if (timeValue?.time === "now") {
       setData([]);
-      void getTimeseriesData(setData, setIsLoading);
+      void getTimeseriesData(obsTime, setData, setIsLoading);
     } else {
       setData([]);
-      void getTimeseriesData(setData, setIsLoading, timeValue?.time);
+      void getTimeseriesData(obsTime, setData, setIsLoading, timeValue?.time);
     }
   };
 
   useEffect(() => {
-    if (timeValue) {
-      getData();
+    getTimeValue(setObsTime).catch(console.error);
+  }, []);
 
-      const interval = setInterval(() => {
-        if (timeValue?.time === "now") {
-          getData();
-        }
-      }, 5 * 60000);
-      return () => clearInterval(interval);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (timeValue && timeValue?.time !== "now")
+        setObsTime(new Date(timeValue.time));
+      else getTimeValue(setObsTime).catch(console.error);
+    }, updateInterval);
+    return () => clearInterval(interval);
   }, [timeValue]);
 
   useEffect(() => {
-    if (data[0]) setObsTime(new Date(`${data[0]?.time}Z`));
-  }, [data]);
+    if (obsTime) getData();
+    else getTimeValue(setObsTime).catch(console.error);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [obsTime, timeValue]);
 
   return (
     <>
-      <Header obsTime={obsTime} setTimeValue={setTimeValue} />
+      <Header obsTime={obsTime} setTimeValue={setTimeValue} setObsTime={setObsTime} />
       <Parameter
         selectedParameter={selectedParameter}
         setSelectedParameter={setSelectedParameter}

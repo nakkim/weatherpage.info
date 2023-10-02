@@ -6,6 +6,48 @@ export const debug = (string: string) => {
     console.info(`${date.toLocaleString()}: ${string}`);
 };
 
+export const minutesFromMidnight = (dateString?: string) => {
+  const now = dateString ? new Date(dateString) : new Date();
+  const midnight = new Date(now);
+  midnight.setHours(0, 0, 0, 0); // Set to midnight
+
+  const millisecondsPassed = now.valueOf() - midnight.valueOf();
+  const minutesPassed = Math.floor(millisecondsPassed / (1000 * 60));
+
+  return minutesPassed;
+}
+
+export const generateRequestParameters = (minutes: number) => {
+  return [
+    "stationname as name",
+    "time",
+    "lat",
+    "lon",
+    "distance",
+    "region",
+    "fmisid",
+    "utctime as time",
+    "ri_10min",
+    "ws_10min",
+    "wg_10min",
+    "wd_10min",
+    "vis",
+    "wawa",
+    "t2m",
+    "n_man",
+    "r_1h",
+    "snow_aws",
+    "pressure",
+    "rh",
+    "dewpoint",
+    `max_t(ws_10min/${minutes}m/0m) as ws_1d`,
+    `max_t(wg_10min/${minutes}m/0m) as wg_1d`,
+    `max_t(t2m/${minutes}m/0m) as tmax`,
+    `max_t(t2m/${minutes}m/0m) as tmin`,
+    `sum_t(r_1h/${minutes}m/0m) as r_1d`,
+  ].toString();
+};
+
 const hexToRgb = (hex: string | undefined) => {
   if (hex) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

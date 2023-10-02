@@ -7,6 +7,7 @@ import Header from "./Header";
 describe("Renders Header component succesfully", async () => {
   const obsTime = new Date("2023-01-01T00:00:00Z");
   const setTimeValue = vi.fn();
+  const setObsTime = vi.fn();
 
   beforeEach(() => {
     vi.resetModules();
@@ -14,14 +15,14 @@ describe("Renders Header component succesfully", async () => {
 
   it("Should render Header correctly", async () => {
     const result = render(
-      <Header obsTime={obsTime} setTimeValue={setTimeValue} />
+      <Header obsTime={obsTime} setTimeValue={setTimeValue} setObsTime={setObsTime}/>
     );
     expect(result).toBeTruthy();
   });
 
   it("Current observations should be active", async () => {
     const result = render(
-      <Header obsTime={obsTime} setTimeValue={setTimeValue} />
+      <Header obsTime={obsTime} setTimeValue={setTimeValue} setObsTime={setObsTime}/>
     );
     expect(result).toBeTruthy();
 
@@ -40,7 +41,7 @@ describe("Renders Header component succesfully", async () => {
 
   it("Should get old observations if clicked", async () => {
     const result = render(
-      <Header obsTime={obsTime} setTimeValue={setTimeValue} />
+      <Header obsTime={obsTime} setTimeValue={setTimeValue} setObsTime={setObsTime}/>
     );
     expect(result).toBeTruthy();
 

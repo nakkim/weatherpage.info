@@ -9,6 +9,7 @@ import DatePicker from "react-datepicker";
 interface IProps {
   obsTime?: Date | undefined;
   setTimeValue?: Dispatch<React.SetStateAction<any>>;
+  setObsTime: Dispatch<React.SetStateAction<any>>;
 }
 
 const styles = {
@@ -33,7 +34,7 @@ const styles = {
   },
 };
 
-const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
+const Header: React.FC<IProps> = ({ obsTime, setTimeValue, setObsTime }) => {
   const [time, setTime] = useState<string>("");
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [isCurrent, setIsCurrent] = useState<boolean>(true);
@@ -101,7 +102,10 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
             variant={isCurrent ? "outlined" : "contained"}
             onClick={() => {
               setIsCurrent(false);
-              if (setTimeValue) setTimeValue({time});
+              if (setTimeValue) {
+                setTimeValue({ time });
+                setObsTime(new Date(time));
+              }
             }}
           >
             Hae
@@ -113,8 +117,9 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue }) => {
             onClick={() => {
               setIsCurrent(true);
               if (setTimeValue) {
+                setObsTime(undefined);
                 setTimeValue(undefined);
-                setTimeValue({time: "now"});
+                setTimeValue({ time: "now" });
               }
             }}
           >

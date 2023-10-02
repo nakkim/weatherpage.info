@@ -1,4 +1,5 @@
-import { minutesFromMidnight } from "../utils/helpers";
+import { regions } from "../../app.config";
+import { generateRequestParameters, minutesFromMidnight } from "../utils/helpers";
 
 export interface IResultData {
   distance?: number;
@@ -46,7 +47,9 @@ export interface IRequestParameters {
   groupareas: number;
 }
 
-export const getTimeValue = async (setObsTime: React.Dispatch<React.SetStateAction<any>>): Promise<any> => {
+export const getTimeValue = async (
+  setObsTime: React.Dispatch<React.SetStateAction<any>>
+): Promise<any> => {
   const timeUrl = `https://opendata.fmi.fi/timeseries?endTime=now&format=json&timeformat=xml&fmisid=101004&param=stationname+as+name,time,t2m&producer=opendata`;
   await fetch(timeUrl)
     .then((result) => result?.json() as Promise<IResultData[]>)
@@ -62,17 +65,6 @@ export const getTimeseriesData = async (
   endTime?: string,
   geoid?: number
 ): Promise<any> => {
-  
-  const regions = [
-    "Ahvenanmaan maakunta,Varsinais-Suomi,Satakunta",
-    "Etelä-Karjala,Pohjois-Karjala",
-    "Etelä-Pohjanmaa,Pohjanmaa,Keski-Pohjanmaa,Pohjois-Pohjanmaa",
-    "Etelä-Savo,Pohjois-Savo",
-    "Kanta-Häme,Päijät-Häme,Pirkanmaa,Keski-Suomi",
-    "Uusimaa,Kymenlaakso",
-    "Lappi,Kainuu",
-  ];
-
   const minutes = endTime
     ? minutesFromMidnight(endTime)
     : minutesFromMidnight();
@@ -81,11 +73,14 @@ export const getTimeseriesData = async (
     urlParamsArray.push({
       ...(endTime
         ? { endTime: endTime, startTime: endTime }
-        : { endTime: obsTime?.toISOString(), startTime: obsTime?.toISOString() }),
+        : {
+            endTime: obsTime?.toISOString(),
+            startTime: obsTime?.toISOString(),
+          }),
       format: "json",
       missingvalue: "-",
       ...(geoid ? { geoid: geoid } : { areas: regions[i] }),
-      param: `stationname as name,time,lat,lon,distance,region,fmisid,utctime+as+time,ri_10min,ws_10min,wg_10min,wd_10min,vis,wawa,t2m,n_man,r_1h,snow_aws,pressure,rh,dewpoint,max_t(ws_10min/${minutes}m/0m) as ws_1d`,
+      param: generateRequestParameters(minutes),
       precision: "double",
       producer: "opendata",
       timeformat: "xml",
@@ -105,7 +100,7 @@ export const getTimeseriesData = async (
   }
 
   try {
-    setIsLoading(true)
+    setIsLoading(true);
     await Promise.all(
       requests.map((request) =>
         fetch(request, { cache: "no-cache" }).then(

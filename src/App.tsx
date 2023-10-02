@@ -2,6 +2,7 @@ import "./App.css";
 
 import { useEffect, useState } from "react";
 
+import { updateInterval } from "../app.config";
 import Header from "./components/Header";
 import Map from "./components/Map";
 import Parameter from "./components/Parameter";
@@ -45,7 +46,7 @@ function App() {
       if (timeValue && timeValue?.time !== "now")
         setObsTime(new Date(timeValue.time));
       else getTimeValue(setObsTime).catch(console.error);
-    }, 5 * 60000);
+    }, updateInterval);
     return () => clearInterval(interval);
   }, [timeValue]);
 

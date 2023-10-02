@@ -6,6 +6,17 @@ export const debug = (string: string) => {
     console.info(`${date.toLocaleString()}: ${string}`);
 };
 
+export const minutesFromMidnight = (dateString?: string) => {
+  const now = dateString ? new Date(dateString) : new Date();
+  const midnight = new Date(now);
+  midnight.setHours(0, 0, 0, 0); // Set to midnight
+
+  const millisecondsPassed = now.valueOf() - midnight.valueOf();
+  const minutesPassed = Math.floor(millisecondsPassed / (1000 * 60));
+
+  return minutesPassed;
+}
+
 const hexToRgb = (hex: string | undefined) => {
   if (hex) {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);

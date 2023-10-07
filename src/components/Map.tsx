@@ -8,20 +8,28 @@ import { ColorRing } from "react-loader-spinner";
 
 import React from "react";
 import * as ReactDOMServer from "react-dom/server";
-import { CircleMarker, MapContainer, Marker, TileLayer } from "react-leaflet";
+import {
+  CircleMarker,
+  MapContainer,
+  Marker,
+  Popup,
+  TileLayer,
+} from "react-leaflet";
 
 import arrow from "../assets/arrow.svg";
 import { IResultData } from "../network/timeseries";
 import { resolveElement, resolveWawaElement } from "../utils/helpers";
 import CloudCover from "./CloudCover";
+import PopupChart from "./PopupChart";
 
 interface IProps {
   data: IResultData[];
   selectedParameter: string;
   isLoading: boolean;
+  obsTime?: Date;
 }
 
-const Map: React.FC<IProps> = ({ data, selectedParameter, isLoading }) => {
+const Map: React.FC<IProps> = ({ data, selectedParameter, isLoading, obsTime }) => {
   const windParameters = ["ws_10min", "wg_10min"];
   const allowMissingValueParameters = ["ri_10min", "r_1d", "r_1h"];
   const displayArrowIcon = windParameters.includes(selectedParameter);
@@ -129,7 +137,11 @@ const Map: React.FC<IProps> = ({ data, selectedParameter, isLoading }) => {
                           ? "leaflet-div-icon-wind"
                           : "leaflet-div-icon-none",
                       })}
-                    />
+                    >
+                      <Popup key={station.fmisid}>
+                        <PopupChart fmisid={station.fmisid} obsTime={obsTime} />
+                      </Popup>
+                    </Marker>
                     {selectedParameter === "wawa" && (
                       <CircleMarker
                         center={[station.lat, station.lon]}
@@ -138,7 +150,11 @@ const Map: React.FC<IProps> = ({ data, selectedParameter, isLoading }) => {
                         radius={6}
                         fillColor={fillValue.color}
                         fillOpacity={1}
-                      />
+                      >
+                        <Popup key={station.fmisid}>
+                          <PopupChart fmisid={station.fmisid} obsTime={obsTime} />
+                        </Popup>
+                      </CircleMarker>
                     )}
                     {displayArrowIcon && (
                       <>
@@ -150,7 +166,11 @@ const Map: React.FC<IProps> = ({ data, selectedParameter, isLoading }) => {
                             iconSize: [0, 0],
                             className: "leaflet-div-icon-none",
                           })}
-                        />
+                        >
+                          <Popup key={station.fmisid}>
+                            <PopupChart fmisid={station.fmisid} obsTime={obsTime} />
+                          </Popup>
+                        </Marker>
                         <Marker
                           position={[station.lat, station.lon]}
                           rotationAngle={station[arrowDirection]}
@@ -161,7 +181,11 @@ const Map: React.FC<IProps> = ({ data, selectedParameter, isLoading }) => {
                             popupAnchor: [0, 0],
                             iconSize: [45, 45],
                           })}
-                        />
+                        >
+                          <Popup key={station.fmisid}>
+                            <PopupChart fmisid={station.fmisid} obsTime={obsTime} />
+                          </Popup>
+                        </Marker>
                       </>
                     )}
                   </React.Fragment>

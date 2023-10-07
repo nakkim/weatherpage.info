@@ -68,6 +68,7 @@ function App() {
         data={data}
         selectedParameter={selectedParameter}
         isLoading={isLoading}
+        obsTime={obsTime && obsTime}
       />
       <Version />
     </>

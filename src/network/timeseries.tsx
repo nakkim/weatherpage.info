@@ -9,7 +9,7 @@ export interface IResultData {
   time?: string;
   producer?: string;
   region?: string;
-  fmisid?: number;
+  fmisid: number;
   ri_10min?: number;
   ws_10min?: number;
   wg_10min?: number;

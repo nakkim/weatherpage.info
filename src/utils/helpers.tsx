@@ -50,7 +50,7 @@ export const generateRequestParameters = (minutes: number) => {
     "wawa",
     "t2m",
     "n_man",
-    "r_1h",
+    "nanmax_t(r_1h/55m/0) as r_1h",
     "snow_aws",
     "pressure",
     "rh",

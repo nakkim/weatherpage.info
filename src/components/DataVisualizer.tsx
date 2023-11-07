@@ -15,10 +15,14 @@ import PopupChart from "./PopupChart";
 interface IProps {
   data: IResultData[];
   selectedParameter: string;
-  obsTime: Date | undefined
+  obsTime: Date | undefined;
 }
 
-const DataVizualizer: React.FC<IProps> = ({ data, selectedParameter, obsTime }) => {
+const DataVizualizer: React.FC<IProps> = ({
+  data,
+  selectedParameter,
+  obsTime,
+}) => {
   const windParameters = ["ws_10min", "wg_10min"];
   const allowMissingValueParameters = ["ri_10min", "r_1d", "r_1h"];
   const displayArrowIcon = windParameters.includes(selectedParameter);
@@ -32,7 +36,11 @@ const DataVizualizer: React.FC<IProps> = ({ data, selectedParameter, obsTime }) 
       : "wg_max_dir";
 
   return data.map((station: IResultData) => {
-    const paramValue = station[selectedParameter as keyof IResultData];
+    let paramValue = station[selectedParameter as keyof IResultData];
+    if (selectedParameter === "t2mtdew")
+      if (station.t2m && station.dewpoint)
+        paramValue = station.t2m - station.dewpoint;
+
     const fillValue = resolveWawaElement(paramValue as number);
     if (fillValue.color === "#7e7e7e")
       fillValue.color = "rgba(126, 126, 126, 0.1)";
@@ -55,7 +63,7 @@ const DataVizualizer: React.FC<IProps> = ({ data, selectedParameter, obsTime }) 
             })}
           />
         );
-      } else if (paramValue !== null) {
+      } else if (paramValue !== null && paramValue !== undefined) {
         // symbol parameters
         if (selectedParameter === "n_man")
           return (

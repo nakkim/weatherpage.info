@@ -48,7 +48,7 @@ export interface IRequestParameters {
 }
 
 export const getTimeValue = async (
-  setObsTime: React.Dispatch<React.SetStateAction<any>>
+  setObsTime: (obsTime: Date) => void
 ): Promise<any> => {
   const timeUrl = `https://opendata.fmi.fi/timeseries?endTime=now&format=json&timeformat=xml&fmisid=101004&param=stationname+as+name,time,t2m&producer=opendata`;
   await fetch(timeUrl)
@@ -60,8 +60,8 @@ export const getTimeValue = async (
 
 export const getTimeseriesData = async (
   obsTime: Date | undefined,
-  setState: React.Dispatch<React.SetStateAction<any>>,
-  setIsLoading: React.Dispatch<React.SetStateAction<any>>,
+  setState: (data: IResultData[]) => void,
+  setIsLoading: (isLoading: boolean) => void,
   endTime?: string,
   geoid?: number
 ): Promise<any> => {

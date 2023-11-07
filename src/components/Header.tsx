@@ -3,13 +3,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
 import { Box, Button } from "@mui/material";
 import * as React from "react";
-import { Dispatch, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 
 interface IProps {
   obsTime?: Date | undefined;
-  setTimeValue?: Dispatch<React.SetStateAction<any>>;
-  setObsTime: Dispatch<React.SetStateAction<any>>;
+  setTimeValue?: (time: {time: string} | undefined) => void;
+  setObsTime: (obsTime: Date | undefined) => void;
 }
 
 const styles = {

@@ -1,12 +1,17 @@
 import { regions } from "../../app.config";
-import { generateRequestParameters, minutesFromMidnight } from "../utils/helpers";
+import {
+  debug,
+  floorToNearest10Minutes,
+  generateRequestParameters,
+  minutesFromMidnight,
+} from "../utils/helpers";
 
 export interface IResultData {
   distance?: number;
   name?: string;
   lat?: number;
   lon?: number;
-  time?: string;
+  time: string;
   producer?: string;
   region?: string;
   fmisid: number;
@@ -50,11 +55,20 @@ export interface IRequestParameters {
 export const getTimeValue = async (
   setObsTime: (obsTime: Date) => void
 ): Promise<any> => {
-  const timeUrl = `https://opendata.fmi.fi/timeseries?endTime=now&format=json&timeformat=xml&fmisid=101004&param=stationname+as+name,time,t2m&producer=opendata`;
-  await fetch(timeUrl)
+  const currentDate = new Date().getTime();
+  const timeUrl = `https://opendata.fmi.fi/timeseries?endTime=now&format=json&timeformat=xml&keyword=synop_fi&param=stationname+as+name,time,t2m&producer=opendata`;
+  await fetch(timeUrl, { cache: "no-store" })
     .then((result) => result?.json() as Promise<IResultData[]>)
     .then((result) => {
-      if (result[0]?.time) setObsTime(new Date(result[0]?.time));
+      const timeArray = result
+        .map((item) => new Date(item.time).getTime())
+        .sort((a, b) => {
+          return a - b;
+        })
+        .filter((x) => {
+          if (currentDate - x < 1000 * 60 * 10) return x;
+        })
+      setObsTime(new Date(floorToNearest10Minutes(timeArray[0])));
     });
 };
 
@@ -103,7 +117,7 @@ export const getTimeseriesData = async (
     setIsLoading(true);
     await Promise.all(
       requests.map((request) =>
-        fetch(request, { cache: "no-cache" }).then(
+        fetch(request).then(
           (result) => result?.json() as Promise<IResultData[]>
         )
       )

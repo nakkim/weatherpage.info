@@ -17,6 +17,21 @@ export const minutesFromMidnight = (dateString?: string) => {
   return minutesPassed;
 }
 
+export const floorToNearest10Minutes = (dateInMilliseconds: number): number => {
+  const date = new Date(dateInMilliseconds);
+  const minutes = date.getMinutes();
+
+  // Calculate the remaining minutes to the nearest 10 minutes
+  const remainingMinutes = minutes % 10;
+
+  // Subtract the remaining minutes, seconds, and milliseconds to floor to the nearest 10 minutes
+  date.setMinutes(minutes - remainingMinutes);
+  date.setSeconds(0);
+  date.setMilliseconds(0);
+
+  return date.getTime();
+}
+
 export const generateRequestParameters = (minutes: number) => {
   return [
     "stationname as name",

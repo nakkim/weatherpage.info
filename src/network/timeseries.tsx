@@ -1,6 +1,5 @@
 import { regions } from "../../app.config";
 import {
-  debug,
   floorToNearest10Minutes,
   generateRequestParameters,
   minutesFromMidnight,

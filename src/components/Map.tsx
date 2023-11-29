@@ -5,7 +5,7 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import { ColorRing } from "react-loader-spinner";
 
 import { IResultData } from "../network/timeseries";
-import DataVizualizer from "./DataVisualizer";
+import Marker from "./Marker";
 
 interface IProps {
   data: IResultData[];
@@ -57,7 +57,7 @@ const Map: React.FC<IProps> = ({
           url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
         />
         {data && (
-          <DataVizualizer data={data} selectedParameter={selectedParameter} obsTime={obsTime} />
+          <Marker data={data} selectedParameter={selectedParameter} obsTime={obsTime} />
         )}
       </MapContainer>
     </>

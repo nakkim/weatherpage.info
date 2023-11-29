@@ -4,7 +4,7 @@ import "leaflet-rotatedmarker";
 import L from "leaflet";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import { CircleMarker, Marker, Popup } from "react-leaflet";
+import { CircleMarker, Marker as LeafletMarker, Popup } from "react-leaflet";
 
 import arrow from "../assets/arrow.svg";
 import { IResultData } from "../network/timeseries";
@@ -18,7 +18,7 @@ interface IProps {
   obsTime: Date | undefined;
 }
 
-const DataVizualizer: React.FC<IProps> = ({
+const Marker: React.FC<IProps> = ({
   data,
   selectedParameter,
   obsTime,
@@ -52,7 +52,7 @@ const DataVizualizer: React.FC<IProps> = ({
       ) {
         const element = resolveElement(selectedParameter, "-");
         return (
-          <Marker
+          <LeafletMarker
             key={`${station.fmisid}-${station.lat}-${station.lon}`}
             position={[station.lat, station.lon]}
             icon={L.divIcon({
@@ -68,7 +68,7 @@ const DataVizualizer: React.FC<IProps> = ({
         if (selectedParameter === "n_man")
           return (
             <React.Fragment key={station?.fmisid}>
-              <Marker
+              <LeafletMarker
                 position={[station.lat, station.lon]}
                 icon={L.divIcon({
                   iconAnchor: [10, 10],
@@ -85,7 +85,7 @@ const DataVizualizer: React.FC<IProps> = ({
         const element = resolveElement(selectedParameter, paramValue as number);
         return (
           <React.Fragment key={station?.fmisid}>
-            <Marker
+            <LeafletMarker
               position={[station.lat, station.lon]}
               icon={L.divIcon({
                 iconAnchor: displayArrowIcon ? [10, 0] : [0, 0],
@@ -99,7 +99,7 @@ const DataVizualizer: React.FC<IProps> = ({
               <Popup key={station.fmisid}>
                 <PopupChart fmisid={station.fmisid} obsTime={obsTime} />
               </Popup>
-            </Marker>
+            </LeafletMarker>
             {selectedParameter === "wawa" && (
               <CircleMarker
                 center={[station.lat, station.lon]}
@@ -116,7 +116,7 @@ const DataVizualizer: React.FC<IProps> = ({
             )}
             {displayArrowIcon && (
               <>
-                <Marker
+                <LeafletMarker
                   position={[station.lat, station.lon]}
                   icon={L.divIcon({
                     iconAnchor: [-10, 1],
@@ -128,8 +128,8 @@ const DataVizualizer: React.FC<IProps> = ({
                   <Popup key={station.fmisid}>
                     <PopupChart fmisid={station.fmisid} obsTime={obsTime} />
                   </Popup>
-                </Marker>
-                <Marker
+                </LeafletMarker>
+                <LeafletMarker
                   position={[station.lat, station.lon]}
                   rotationAngle={station[arrowDirection]}
                   rotationOrigin="center"
@@ -143,7 +143,7 @@ const DataVizualizer: React.FC<IProps> = ({
                   <Popup key={station.fmisid}>
                     <PopupChart fmisid={station.fmisid} obsTime={obsTime} />
                   </Popup>
-                </Marker>
+                </LeafletMarker>
               </>
             )}
           </React.Fragment>
@@ -153,4 +153,4 @@ const DataVizualizer: React.FC<IProps> = ({
   });
 };
 
-export default DataVizualizer;
+export default Marker;

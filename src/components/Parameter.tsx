@@ -84,6 +84,9 @@ const Parameter: React.FC<IProps> = ({
         <MenuItem value={"tmin"} selected>
           Alin lämpötila
         </MenuItem>
+        <MenuItem value={"r_1d"} selected>
+          Sadekertymä
+        </MenuItem>
       </Select>
     </Box>
   );

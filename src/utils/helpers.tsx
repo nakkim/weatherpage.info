@@ -61,7 +61,7 @@ export const generateRequestParameters = (minutes: number) => {
     `max_t(wg_10min/${minutes}m/0m) as wg_1d`,
     `max_t(t2m/${minutes}m/0m) as tmax`,
     `min_t(t2m/${minutes}m/0m) as tmin`,
-    `sum_t(r_1h/${minutes}m/0m) as r_1d`,
+    `nansum_t(r_1h/${minutes}m/0m) as r_1d`,
   ].toString();
 };
 

@@ -97,7 +97,7 @@ const Marker: React.FC<IProps> = ({
               })}
             >
               <Popup key={station.fmisid}>
-                <PopupChart fmisid={station.fmisid} obsTime={obsTime} />
+                <PopupChart stationName={station.name} fmisid={station.fmisid} obsTime={obsTime} />
               </Popup>
             </LeafletMarker>
             {selectedParameter === "wawa" && (
@@ -110,7 +110,7 @@ const Marker: React.FC<IProps> = ({
                 fillOpacity={1}
               >
                 <Popup key={station.fmisid}>
-                  <PopupChart fmisid={station.fmisid} obsTime={obsTime} />
+                  <PopupChart stationName={station.name} fmisid={station.fmisid} obsTime={obsTime} />
                 </Popup>
               </CircleMarker>
             )}
@@ -126,7 +126,7 @@ const Marker: React.FC<IProps> = ({
                   })}
                 >
                   <Popup key={station.fmisid}>
-                    <PopupChart fmisid={station.fmisid} obsTime={obsTime} />
+                    <PopupChart stationName={station.name} fmisid={station.fmisid} obsTime={obsTime} />
                   </Popup>
                 </LeafletMarker>
                 <LeafletMarker
@@ -141,7 +141,7 @@ const Marker: React.FC<IProps> = ({
                   })}
                 >
                   <Popup key={station.fmisid}>
-                    <PopupChart fmisid={station.fmisid} obsTime={obsTime} />
+                    <PopupChart stationName={station.name} fmisid={station.fmisid} obsTime={obsTime} />
                   </Popup>
                 </LeafletMarker>
               </>

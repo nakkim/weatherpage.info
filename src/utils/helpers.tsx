@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 
+import { getLuminance } from "@mui/material";
+
 export const debug = (string: string) => {
   const date = new Date();
   if (import.meta.env.VITE_API_URL)
@@ -15,7 +17,7 @@ export const minutesFromMidnight = (dateString?: string) => {
   const minutesPassed = Math.floor(millisecondsPassed / (1000 * 60));
 
   return minutesPassed;
-}
+};
 
 export const floorToNearest10Minutes = (dateInMilliseconds: number): number => {
   const date = new Date(dateInMilliseconds);
@@ -30,7 +32,7 @@ export const floorToNearest10Minutes = (dateInMilliseconds: number): number => {
   date.setMilliseconds(0);
 
   return date.getTime();
-}
+};
 
 export const generateRequestParameters = (minutes: number) => {
   return [
@@ -78,18 +80,27 @@ const hexToRgb = (hex: string | undefined) => {
   }
 };
 
-const getContrastYIQ = (hexColor: string | undefined) => {
+export const getFontColor = (
+  hexColor: string | undefined,
+  param: string,
+  value: number
+): 'black' | 'white' => {
+  const temperatureParams = ["t2m", "tmin", "tmax", "dewpoint"];
+  const ignoredParams = ["r_1h", "r_1d", "ri_10min", 't2mtdew', 'snow_aws'];
+
+  if (temperatureParams.includes(param) && value < 0) return "black";
+  if (ignoredParams.includes(param)) return "black";
+
   if (hexColor) {
-    hexColor = hexColor.substring(1)
-    const r = parseInt(hexColor.substr(0, 2), 16);
-    const g = parseInt(hexColor.substr(2, 2), 16);
-    const b = parseInt(hexColor.substr(4, 2), 16);
-    const yiq = (r * 299 + g * 587 + b * 114) / 1000;
-    return yiq >= 128 ? "black" : "white";
+    const luminance = getLuminance(hexColor);
+    const threshold = 0.2; // Adjust this value to make the decision more or less sensitive
+    const textColor = luminance > threshold ? "black" : "white";
+    return textColor;
   }
+  else return "black";
 };
 
-export const resolveElementColor = (param: string, value: number) => {
+export const resolveElementColor = (param: string, value: number): string => {
   switch (param) {
     case "dewpoint":
     case "t2m":
@@ -112,7 +123,7 @@ export const resolveElementColor = (param: string, value: number) => {
       if (value >= -4 && value < -2) return "#afe9fc";
       if (value >= -2 && value < -1) return "#c1f4fd";
       if (value >= -1 && value < 0) return "#d4ffff";
-      if (value >= 0 && value < 1) return "#05b38a";
+      if (value >= 0 && value < 1) return "#02d495";
       if (value >= 1 && value < 2) return "#02d495";
       if (value >= 2 && value < 4) return "#8aedbb";
       if (value >= 4 && value < 6) return "#ccffd0";
@@ -124,10 +135,9 @@ export const resolveElementColor = (param: string, value: number) => {
       if (value >= 16 && value < 18) return "#f29500";
       if (value >= 18 && value < 20) return "#f07400";
       if (value >= 20 && value < 22) return "#ff5324";
-      if (value >= 22 && value < 24) return "#f71707";
-      if (value >= 24 && value < 26) return "#db0a07";
-      if (value >= 26 && value < 28) return "#bd0404";
-      if (value >= 28 && value < 30) return "#9e0101";
+      if (value >= 22 && value < 25) return "#f71707";
+      if (value >= 25 && value < 28) return "#db0a07";
+      if (value >= 28 && value < 30) return "#bd0404";
       if (value >= 30) return "#eb0052";
       return "#8aedbb";
 
@@ -224,10 +234,15 @@ export const resolveElementColor = (param: string, value: number) => {
       if (value > 175 && value <= 200) return "#5b106f";
       if (value > 200) return "#ebdaf0";
       return "#bfe6ff";
+
+    default:
+      return "#ffffff";
   }
 };
 
-export const resolveWawaElement = (value: number) => {
+export const resolveWawaElement = (
+  value: number
+): { short: string; backgroundColor: string; color: string } => {
   if (value === 0)
     return {
       short: "FairWeather",
@@ -406,7 +421,7 @@ export const resolveElement = (param: string, value: number | string) => {
     else
       Object.assign(element.style, {
         ...styles.element,
-        color: getContrastYIQ(resolveElementColor(param, value)),
+        color: getFontColor(resolveElementColor(param, value), param, value),
         backgroundColor: `rgba(${hexToRgb(elementStyle)},0.7)`,
       });
   }

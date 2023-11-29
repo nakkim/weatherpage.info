@@ -1,11 +1,7 @@
 export const regions = [
-    "Ahvenanmaan maakunta,Varsinais-Suomi,Satakunta",
-    "Etelä-Karjala,Pohjois-Karjala",
-    "Etelä-Pohjanmaa,Pohjanmaa,Keski-Pohjanmaa,Pohjois-Pohjanmaa",
-    "Etelä-Savo,Pohjois-Savo",
-    "Kanta-Häme,Päijät-Häme,Pirkanmaa,Keski-Suomi",
-    "Uusimaa,Kymenlaakso",
-    "Lappi,Kainuu",
-  ]
+  "Uusimaa,Kymenlaakso,Ahvenanmaan maakunta,Varsinais-Suomi,Satakunta,Pirkanmaa,Keski-Suomi",
+  "Etelä-Pohjanmaa,Pohjanmaa,Keski-Pohjanmaa,Pohjois-Pohjanmaa,Lappi,Kainuu",
+  "Etelä-Karjala,Pohjois-Karjala,Etelä-Savo,Pohjois-Savo,Kanta-Häme,Päijät-Häme",
+];
 
-  export const updateInterval = 5 * 60000
+export const updateInterval = 5 * 60000;

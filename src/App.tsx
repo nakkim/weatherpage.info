@@ -9,9 +9,9 @@ import Parameter from "./components/Parameter";
 import Version from "./components/Version";
 import {
   getTimeseriesData,
-  getTimeValue,
   IResultData,
 } from "./network/timeseries";
+import { getTimeValue } from "./network/timeseriesUtils";
 
 interface TimeProp {
   time: string;
@@ -27,7 +27,7 @@ function App() {
   const [selectedParameter, setSelectedParameter] =
     useState<string>("ws_10min");
 
-  const getData = () => {
+  const fetchObservationData = () => {
     if (timeValue?.time === "now") {
       setData([]);
       void getTimeseriesData(obsTime, setData, setIsLoading);
@@ -51,7 +51,7 @@ function App() {
   }, [timeValue]);
 
   useEffect(() => {
-    if (obsTime) getData();
+    if (obsTime) fetchObservationData();
     else getTimeValue(setObsTime).catch(console.error);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [obsTime, timeValue]);

@@ -6,9 +6,9 @@ import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { CircleMarker, Marker as LeafletMarker, Popup } from "react-leaflet";
 
-import arrow from "../assets/arrow.svg";
-import { IResultData } from "../network/timeseries";
-import { resolveElement, resolveWawaElement } from "../utils/helpers";
+import arrow from "../../assets/arrow.svg";
+import { IResultData } from "../../network/timeseries";
+import { resolveElement, resolveWawaElement } from "../../utils/helpers";
 import CloudCover from "./CloudCover";
 import PopupChart from "./PopupChart";
 
@@ -72,7 +72,7 @@ const Marker: React.FC<IProps> = ({
                 position={[station.lat, station.lon]}
                 icon={L.divIcon({
                   iconAnchor: [10, 10],
-                  iconSize: [0, 0],
+                  iconSize: [20, 20],
                   html: ReactDOMServer.renderToString(
                     <CloudCover value={paramValue} />
                   ),

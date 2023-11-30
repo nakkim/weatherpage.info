@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { updateInterval } from "../app.config";
 import Header from "./components/Header";
-import Map from "./components/Map";
+import Map from "./components/map/Map";
 import Parameter from "./components/Parameter";
 import Version from "./components/Version";
 import {

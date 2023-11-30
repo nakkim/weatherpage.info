@@ -4,7 +4,7 @@ import React from "react";
 import { MapContainer, TileLayer } from "react-leaflet";
 import { ColorRing } from "react-loader-spinner";
 
-import { IResultData } from "../network/timeseries";
+import { IResultData } from "../../network/timeseries";
 import Marker from "./Marker";
 
 interface IProps {

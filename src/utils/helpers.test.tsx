@@ -11,7 +11,7 @@ describe("Test map utility functions", async () => {
       value = resolveElementColor("t2m", -13);
       expect(value).toBe("#4ba1e4");
       value = resolveElementColor("t2m", 0);
-      expect(value).toBe("#05b38a");
+      expect(value).toBe("#02d495");
     });
   });
 

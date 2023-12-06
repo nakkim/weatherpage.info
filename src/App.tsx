@@ -3,10 +3,10 @@ import "./App.css";
 import { useEffect, useState } from "react";
 
 import { updateInterval } from "../app.config";
-import Header from "./components/Header";
 import Map from "./components/map/Map";
-import Parameter from "./components/Parameter";
-import Version from "./components/Version";
+import Header from "./components/ui/Header";
+import Parameter from "./components/ui/Parameter";
+import Version from "./components/ui/Version";
 import {
   getTimeseriesData,
   IResultData,

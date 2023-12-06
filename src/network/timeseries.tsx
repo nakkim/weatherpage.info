@@ -3,8 +3,11 @@ import {
   generateRequestParameters,
   minutesFromMidnight,
 } from "../utils/helpers";
+import { subtractHours } from "./timeseriesUtils";
 
 export interface IResultData {
+  tmax?: number;
+  tmin?: number;
   distance?: number;
   name?: string;
   lat?: number;
@@ -37,7 +40,7 @@ export interface IRequestParameters {
   areas?: string;
   endtime?: string;
   format: string;
-  geoid?: number;
+  fmisid?: number;
   keyword?: string;
   maxdistance?: string;
   missingvalue: string;
@@ -55,23 +58,27 @@ export const getTimeseriesData = async (
   setState: (data: IResultData[]) => void,
   setIsLoading: (isLoading: boolean) => void,
   endTime?: string,
-  geoid?: number
+  fmisid?: number
 ): Promise<any> => {
   const minutes = endTime
     ? minutesFromMidnight(endTime)
     : minutesFromMidnight();
+
   const urlParamsArray: IRequestParameters[] = [];
-  for (let i = 0; i < regions.length; i++) {
+  const startTime =
+    fmisid && endTime
+      ? subtractHours(new Date(endTime), 18).toISOString()
+      : endTime;
+  const timeValues = endTime
+    ? { endTime: endTime, startTime: startTime }
+    : { endTime: obsTime?.toISOString(), startTime: obsTime?.toISOString() };
+
+  if (fmisid)
     urlParamsArray.push({
-      ...(endTime
-        ? { endTime: endTime, startTime: endTime }
-        : {
-            endTime: obsTime?.toISOString(),
-            startTime: obsTime?.toISOString(),
-          }),
+      ...timeValues,
       format: "json",
       missingvalue: "-",
-      ...(geoid ? { geoid: geoid } : { areas: regions[i] }),
+      fmisid: fmisid,
       param: generateRequestParameters(minutes),
       precision: "double",
       producer: "opendata",
@@ -80,7 +87,22 @@ export const getTimeseriesData = async (
       groupareas: 0,
       timestep: 10,
     });
-  }
+  else
+    for (let i = 0; i < regions.length; i++) {
+      urlParamsArray.push({
+        ...timeValues,
+        format: "json",
+        missingvalue: "-",
+        areas: regions[i],
+        param: generateRequestParameters(minutes),
+        precision: "double",
+        producer: "opendata",
+        timeformat: "xml",
+        tz: "UTC",
+        groupareas: 0,
+        timestep: 10,
+      });
+    }
 
   const requests = [];
   for (let i = 0; i < urlParamsArray.length; i++) {

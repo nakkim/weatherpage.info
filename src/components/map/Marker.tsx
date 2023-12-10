@@ -96,7 +96,7 @@ const Marker: React.FC<IProps> = ({
                   : "leaflet-div-icon-none",
               })}
             >
-              <Popup key={station.fmisid}>
+              <Popup minWidth={1000} maxWidth={1000} key={station.fmisid}>
                 <PopupChart stationName={station.name} fmisid={station.fmisid} obsTime={obsTime} />
               </Popup>
             </LeafletMarker>
@@ -109,7 +109,7 @@ const Marker: React.FC<IProps> = ({
                 fillColor={fillValue.color}
                 fillOpacity={1}
               >
-                <Popup key={station.fmisid}>
+                <Popup minWidth={1000} maxWidth={1000} key={station.fmisid}>
                   <PopupChart stationName={station.name} fmisid={station.fmisid} obsTime={obsTime} />
                 </Popup>
               </CircleMarker>
@@ -125,7 +125,7 @@ const Marker: React.FC<IProps> = ({
                     className: "leaflet-div-icon-none",
                   })}
                 >
-                  <Popup key={station.fmisid}>
+                  <Popup minWidth={1000} maxWidth={1000} key={station.fmisid}>
                     <PopupChart stationName={station.name} fmisid={station.fmisid} obsTime={obsTime} />
                   </Popup>
                 </LeafletMarker>
@@ -140,7 +140,7 @@ const Marker: React.FC<IProps> = ({
                     iconSize: [45, 45],
                   })}
                 >
-                  <Popup key={station.fmisid}>
+                  <Popup minWidth={1000} maxWidth={1000} key={station.fmisid}>
                     <PopupChart stationName={station.name} fmisid={station.fmisid} obsTime={obsTime} />
                   </Popup>
                 </LeafletMarker>

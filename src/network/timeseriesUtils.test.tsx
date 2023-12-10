@@ -75,7 +75,7 @@ describe("timeseriesUtils", () => {
 
     it("should return an array of arrays with correct values", () => {
       const result: (string | number | null)[][] = formatDataToEcharts(mockData);
-      expect(result[0][0]).toEqual(new Date("2023-12-02T10:20:00").getTime());
+      expect(result[0][0]).toEqual("2023-12-02T10:20:00Z");
       expect(result[0][1]).toEqual(1.8);
       expect(result[0][2]).toEqual(2.5);
       expect(result[0][3]).toEqual(17);
@@ -84,7 +84,7 @@ describe("timeseriesUtils", () => {
       expect(result[0][6]).toEqual(71);
       expect(result[0][7]).toEqual(6930);
       expect(result[0][8]).toEqual(-8.3);
-      expect(result[0][9]).toEqual(null);
+      expect(result[0][9]).toEqual(-10.2);
       expect(result[0][10]).toEqual(-8.1);
       expect(result[0][11]).toEqual(0);
       expect(result[0][12]).toEqual(0);

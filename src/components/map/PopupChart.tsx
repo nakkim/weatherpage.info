@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 import { getTimeseriesData, IResultData } from "../../network/timeseries";
 import { formatDataToEcharts } from "../../network/timeseriesUtils";
+import { formatTooltip, renderArrow } from "../../utils/helpers";
 
 interface IProps {
   stationName: string | undefined;
@@ -16,7 +17,7 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
   const [chartData, setChartData] = useState<(number | string | null)[][]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const options: Intl.DateTimeFormatOptions = {
+  const timeFormatOptions: Intl.DateTimeFormatOptions = {
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
@@ -46,23 +47,26 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
     n_man: 17,
   };
 
-  const DEFAULT_OPTION = {
+  const windGraphOptions = {
     title: {
-      text: 'Keskituulen ja maksimipuuskan vaihteluväli [m/s]',
-      x: 'center',
+      text: "Keskituulen ja maksimipuuskan vaihteluväli [m/s]",
+      x: "center",
       textStyle: {
-        fontWeight: 'normal',
+        fontWeight: "normal",
         fontSize: 14,
       },
     },
     tooltip: {
       trigger: "axis",
+      formatter: function (params: any) {
+        return formatTooltip(params, timeFormatOptions, dims);
+      }
     },
     grid: {
       top: 60,
       left: 20,
-      right: 10,
-      bottom: 30,
+      right: 30,
+      bottom: 70,
     },
     xAxis: {
       type: "time",
@@ -114,6 +118,13 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
         name: "m/s",
         boundaryGap: [0.2, 0.2],
       },
+      {
+        type: "value",
+        axisLabel: { show: false },
+        splitLine: {
+          show: false,
+        },
+      },
     ],
     series: [
       {
@@ -131,6 +142,22 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
           item[dims.wg_10min],
           item[dims.ws_10min],
           item[dims.wg_10min],
+        ]),
+      },
+      {
+        name: "wind_arrows",
+        type: "custom",
+        renderItem: renderArrow,
+        yAxisIndex: 1,
+        itemStyle: {
+          color: "#ffffff",
+          borderColor: "#ffffff",
+        },
+        data: chartData.map((item) => [
+          item[dims.time],
+          item[dims.ws_10min],
+          item[dims.wg_10min],
+          item[dims.wd_10min],
         ]),
       },
     ],
@@ -159,9 +186,9 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
       </Box>
       <Box>
         <b>Viimeisin havainto:</b>{" "}
-        {obsTime?.toLocaleDateString("fi-FI", options)}
+        {obsTime?.toLocaleDateString("fi-FI", timeFormatOptions)}
       </Box>
-      <ReactECharts option={DEFAULT_OPTION} style={{ height: 400 }} />
+      <ReactECharts option={windGraphOptions} style={{ height: 400 }} />
     </Box>
   );
 };

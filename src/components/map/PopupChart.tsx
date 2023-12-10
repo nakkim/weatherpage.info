@@ -15,7 +15,7 @@ interface IProps {
 const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
   const [data, setData] = useState<IResultData[]>([]);
   const [chartData, setChartData] = useState<(number | string | null)[][]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  //const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const timeFormatOptions: Intl.DateTimeFormatOptions = {
     day: "numeric",
@@ -168,7 +168,7 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
       void getTimeseriesData(
         obsTime,
         setData,
-        setIsLoading,
+        () => {(true)},
         obsTime?.toISOString(),
         fmisid
       );

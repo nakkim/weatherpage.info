@@ -462,7 +462,7 @@ export const degreesToCardinalDirection = (degrees: number): string => {
 };
 
 export const renderArrow: echarts.CustomSeriesOption["renderItem"] = function (
-  param: echarts.CustomSeriesRenderItemParams,
+  _param: echarts.CustomSeriesRenderItemParams,
   api: echarts.CustomSeriesRenderItemAPI
 ) {
   const dims = {

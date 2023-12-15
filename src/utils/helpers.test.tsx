@@ -7,6 +7,7 @@ import {
   resolveElement,
   resolveElementColor,
   resolveWawaElement,
+  windowWidth,
 } from "./helpers";
 
 describe("Test map utility functions", async () => {
@@ -152,6 +153,22 @@ describe("Test PopupChart utility functions", () => {
         ""
       );
       expect(tooltip).toBe(expectedTooltip);
+    });
+  });
+
+  describe("Test windowWidth function", () => {
+    it("should return the correct window width and height", () => {
+      // Mock the window object
+      const mockWindow = {
+        innerWidth: 1024,
+        innerHeight: 768,
+      };
+      Object.defineProperty(global, "window", {
+        value: mockWindow,
+      });
+  
+      const result: {width: number, height: number} = windowWidth();
+      expect(result).toEqual({ width: 1024, height: 768 });
     });
   });
 });

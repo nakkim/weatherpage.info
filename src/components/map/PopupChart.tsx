@@ -69,6 +69,10 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
       bottom: 70,
     },
     xAxis: {
+      offset: 30,
+      axisLine: {
+        onZero: false,
+      },
       type: "time",
       splitLine: {
         show: true,
@@ -188,7 +192,7 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
         <b>Viimeisin havainto:</b>{" "}
         {obsTime?.toLocaleDateString("fi-FI", timeFormatOptions)}
       </Box>
-      <ReactECharts option={windGraphOptions} style={{ height: 400 }} />
+      <ReactECharts option={windGraphOptions}/>
     </Box>
   );
 };

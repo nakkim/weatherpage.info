@@ -495,7 +495,7 @@ export const renderArrow: echarts.CustomSeriesOption["renderItem"] = function (
   });
   if(api.value(dims.windgust) === 0) return;
   const point = api.coord([api.value(dims.time), 0]);
-  point[1] = point[1] - 10;
+  point[1] = point[1] + 15;
   const arrowSize = 12;
   return {
     type: "group",
@@ -548,4 +548,12 @@ export const formatTooltip = (params: any, timeFormatOptions: Intl.DateTimeForma
     ${valueStringWind} <br/>
     ${valueStringWindDirection} <br/>
     </div>`;
+}
+
+export const windowWidth = (): {width: number, height: number} => {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
 }

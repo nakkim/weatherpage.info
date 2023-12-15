@@ -8,7 +8,7 @@ import { CircleMarker, Marker as LeafletMarker, Popup } from "react-leaflet";
 
 import arrow from "../../assets/arrow.svg";
 import { IResultData } from "../../network/timeseries";
-import { resolveElement, resolveWawaElement } from "../../utils/helpers";
+import { resolveElement, resolveWawaElement, windowWidth } from "../../utils/helpers";
 import CloudCover from "./CloudCover";
 import PopupChart from "./PopupChart";
 
@@ -18,14 +18,14 @@ interface IProps {
   obsTime: Date | undefined;
 }
 
-const Marker: React.FC<IProps> = ({
-  data,
-  selectedParameter,
-  obsTime,
-}) => {
+const Marker: React.FC<IProps> = ({ data, selectedParameter, obsTime }) => {
   const windParameters = ["ws_10min", "wg_10min"];
   const allowMissingValueParameters = ["ri_10min", "r_1d", "r_1h"];
   const displayArrowIcon = windParameters.includes(selectedParameter);
+
+  const popupWidth = windowWidth().width > 1000 ? 1000 : windowWidth().width - 150;
+  const minWidth = popupWidth;
+  const maxWidth = popupWidth;
 
   const arrowDirection =
     // eslint-disable-next-line no-constant-condition
@@ -96,8 +96,16 @@ const Marker: React.FC<IProps> = ({
                   : "leaflet-div-icon-none",
               })}
             >
-              <Popup minWidth={1000} maxWidth={1000} key={station.fmisid}>
-                <PopupChart stationName={station.name} fmisid={station.fmisid} obsTime={obsTime} />
+              <Popup
+                minWidth={minWidth}
+                maxWidth={maxWidth}
+                key={station.fmisid}
+              >
+                <PopupChart
+                  stationName={station.name}
+                  fmisid={station.fmisid}
+                  obsTime={obsTime}
+                />
               </Popup>
             </LeafletMarker>
             {selectedParameter === "wawa" && (
@@ -109,8 +117,16 @@ const Marker: React.FC<IProps> = ({
                 fillColor={fillValue.color}
                 fillOpacity={1}
               >
-                <Popup minWidth={1000} maxWidth={1000} key={station.fmisid}>
-                  <PopupChart stationName={station.name} fmisid={station.fmisid} obsTime={obsTime} />
+                <Popup
+                  minWidth={minWidth}
+                  maxWidth={maxWidth}
+                  key={station.fmisid}
+                >
+                  <PopupChart
+                    stationName={station.name}
+                    fmisid={station.fmisid}
+                    obsTime={obsTime}
+                  />
                 </Popup>
               </CircleMarker>
             )}
@@ -125,8 +141,16 @@ const Marker: React.FC<IProps> = ({
                     className: "leaflet-div-icon-none",
                   })}
                 >
-                  <Popup minWidth={1000} maxWidth={1000} key={station.fmisid}>
-                    <PopupChart stationName={station.name} fmisid={station.fmisid} obsTime={obsTime} />
+                  <Popup
+                    minWidth={minWidth}
+                    maxWidth={maxWidth}
+                    key={station.fmisid}
+                  >
+                    <PopupChart
+                      stationName={station.name}
+                      fmisid={station.fmisid}
+                      obsTime={obsTime}
+                    />
                   </Popup>
                 </LeafletMarker>
                 <LeafletMarker
@@ -140,8 +164,16 @@ const Marker: React.FC<IProps> = ({
                     iconSize: [45, 45],
                   })}
                 >
-                  <Popup minWidth={1000} maxWidth={1000} key={station.fmisid}>
-                    <PopupChart stationName={station.name} fmisid={station.fmisid} obsTime={obsTime} />
+                  <Popup
+                    minWidth={minWidth}
+                    maxWidth={maxWidth}
+                    key={station.fmisid}
+                  >
+                    <PopupChart
+                      stationName={station.name}
+                      fmisid={station.fmisid}
+                      obsTime={obsTime}
+                    />
                   </Popup>
                 </LeafletMarker>
               </>

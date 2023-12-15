@@ -20,6 +20,7 @@
     "@mui/icons-material": "^5.14.0",
     "@mui/material": "^5.14.0",
     "@types/leaflet-rotatedmarker": "^0.2.2",
+    "@types/react-leaflet-pixi-overlay": "^3.0.3",
     "echarts-for-react": "^3.0.2",
     "leaflet": "^1.9.4",
     "leaflet-rotatedmarker": "^0.2.0",
@@ -27,6 +28,7 @@
     "react-datepicker": "^4.16.0",
     "react-dom": "^18.2.0",
     "react-leaflet": "^4.2.1",
+    "react-leaflet-pixi-overlay": "^3.0.2",
     "react-loader-spinner": "^5.3.4",
     "vite-plugin-svgr": "^3.2.0"
   },

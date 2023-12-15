@@ -1,11 +1,13 @@
 import "leaflet/dist/leaflet.css";
 
 import React from "react";
+import { renderToString } from "react-dom/server";
 import { MapContainer, TileLayer } from "react-leaflet";
+import PixiOverlay, { MarkersPropsPixiOverlay } from "react-leaflet-pixi-overlay";
 import { ColorRing } from "react-loader-spinner";
 
 import { IResultData } from "../../network/timeseries";
-import Marker from "./Marker";
+// import Marker from "./Marker";
 
 interface IProps {
   data: IResultData[];
@@ -20,6 +22,29 @@ const Map: React.FC<IProps> = ({
   isLoading,
   obsTime,
 }) => {
+
+  
+  // loop through data object and create markers
+  const markers: MarkersPropsPixiOverlay = data.map((item) => {
+    const position: [number, number] = [item.lat || 0, item.lon || 0];
+    return {
+      id: item.fmisid,
+      iconColor: "red",
+      position: position,
+      popup: renderToString(
+        <div>
+          <p>
+            {item.name} {item.fmisid}
+          </p>
+          <p>{obsTime?.toLocaleString()}</p>
+        </div>
+      ),
+      popupOpen: false,
+      onClick: () => alert("marker clicked"),
+      tooltip: "Hey!",
+    };
+  });
+
   return (
     <>
       {isLoading && (
@@ -57,7 +82,11 @@ const Map: React.FC<IProps> = ({
           url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
         />
         {data && (
-          <Marker data={data} selectedParameter={selectedParameter} obsTime={obsTime} />
+          <PixiOverlay
+            markers={
+              markers
+            }
+          />
         )}
       </MapContainer>
     </>

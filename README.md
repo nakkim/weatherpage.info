@@ -15,4 +15,4 @@ Run `npm run dev` for a local development server. Navigate to http://127.0.0.1:5
 
 ## Running unit tests
 
-Run `npm run test` to execute all unit tests via [Jest](https://jestjs.io).
+Run `npm run test` to execute all unit tests via [Jest](https://jestjs.io). 

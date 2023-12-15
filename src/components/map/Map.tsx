@@ -11,14 +11,13 @@ import { IResultData } from "../../network/timeseries";
 
 interface IProps {
   data: IResultData[];
-  selectedParameter: string;
+  selectedParameter?: string;
   isLoading: boolean;
   obsTime?: Date;
 }
 
 const Map: React.FC<IProps> = ({
   data,
-  selectedParameter,
   isLoading,
   obsTime,
 }) => {

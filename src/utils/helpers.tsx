@@ -376,7 +376,7 @@ export const resolveElement = (param: string, value: number | string) => {
       paddingRight: "5px",
       fontSize: "15px",
       position: "relative",
-      left: "1px",
+      left: "0px",
       width: "20px",
     },
   };

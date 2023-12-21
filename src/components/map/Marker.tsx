@@ -1,13 +1,10 @@
 import "leaflet/dist/leaflet.css";
 import "leaflet-rotatedmarker";
 
-import L from "leaflet";
 import React from "react";
-import ReactDOMServer from "react-dom/server";
-import { Marker as LeafletMarker } from "react-leaflet";
 
 import { IResultData } from "../../network/timeseries";
-import { resolveElement, windowWidth } from "../../utils/helpers";
+import { windowWidth } from "../../utils/helpers";
 import ArrowIcon from "./markerComponents/ArrowIcon";
 import ObservedCloudCover from "./markerComponents/ObservedCloudCover";
 import ObservedDefaultParameter from "./markerComponents/ObservedDefaultParameter";

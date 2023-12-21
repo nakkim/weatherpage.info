@@ -2,7 +2,7 @@ import "./App.css";
 
 import { useEffect, useState } from "react";
 
-import { updateInterval } from "../app.config";
+import { updateInterval } from "../../app.config";
 import Map from "./components/map/Map";
 import Header from "./components/ui/Header";
 import Parameter from "./components/ui/Parameter";

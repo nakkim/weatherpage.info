@@ -1,4 +1,4 @@
-import { regions } from "../../app.config";
+import { regions } from "../../../app.config";
 import {
   generateRequestParameters,
   minutesFromMidnight,

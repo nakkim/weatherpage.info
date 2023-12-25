@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { render } from "@testing-library/react";
+import { useTranslation } from "react-i18next";
 import { beforeEach,describe, expect, it, vi } from "vitest";
 
 import Parameter from "./Parameter";
@@ -32,6 +33,6 @@ describe("Renders Parameter component succesfully", async () => {
     expect(result).toBeTruthy();
 
     const select = result.getByTestId("selected-parameter-value");
-    expect(select.textContent).toBe("Lämpötila​");
+    expect(select.textContent).toBe("params.t2m​");
   });
 });

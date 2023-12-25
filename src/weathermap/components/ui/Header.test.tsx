@@ -27,7 +27,7 @@ describe("Renders Header component succesfully", async () => {
     expect(result).toBeTruthy();
 
     const button = result.getByTestId("get-current-observations-button");
-    expect(button.textContent).toBe("Nyt");
+    expect(button.textContent).toBe("general.now");
 
     fireEvent(
       //getByText(button, 'Nyt'),
@@ -46,7 +46,7 @@ describe("Renders Header component succesfully", async () => {
     expect(result).toBeTruthy();
 
     const button = result.getByTestId("get-historical-observations-button");
-    expect(button.textContent).toBe("Hae");
+    expect(button.textContent).toBe("general.search");
     expect(button.classList.contains("MuiButton-outlined")).toBe(true);
 
     fireEvent(
@@ -56,7 +56,7 @@ describe("Renders Header component succesfully", async () => {
       })
     );
     expect(button.classList.contains("MuiButton-contained")).toBe(true);
-    expect(button.textContent).toBe("Hae");
+    expect(button.textContent).toBe("general.search");
 
     const input = result.getByTestId("observation-time-value");
     expect((input as HTMLInputElement).value).toBe("01.01.2023 02:00");

@@ -5,6 +5,7 @@ import { Box, Button } from "@mui/material";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   obsTime?: Date | undefined;
@@ -38,6 +39,7 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue, setObsTime }) => {
   const [time, setTime] = useState<string>("");
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [isCurrent, setIsCurrent] = useState<boolean>(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (obsTime) {
@@ -108,7 +110,7 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue, setObsTime }) => {
               }
             }}
           >
-            Hae
+            {t("general.search")}
           </Button>
           <Button
             sx={styles.button}
@@ -123,7 +125,7 @@ const Header: React.FC<IProps> = ({ obsTime, setTimeValue, setObsTime }) => {
               }
             }}
           >
-            Nyt
+            {t("general.now")}
           </Button>
         </Box>
       </Box>

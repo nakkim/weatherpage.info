@@ -1,0 +1,28 @@
+{
+  "translation": {
+    "general": {
+      "now": "Nyt",
+      "search": "Hae"
+    },
+    "params": {
+      "t2m": "Lämpötila",
+      "dewpoint": "Kastepiste",
+      "t2mtdew": "Kastepiste",
+      "ws_10min": "Keskituuli",
+      "wg_10min": "Maksimipuuska",
+      "rh": "Suhteellinen kosteus",
+      "r_1h": "Tunnin sademäärä",
+      "ri_10min": "Sateen intensiteetti",
+      "snow_aws": "Lumensyvyys",
+      "pressure": "Ilmanpaine",
+      "vis": "Näkyvyys",
+      "n_man": "Kokonaispilvisyys",
+      "ws_1d": "Kovin keskituuli",
+      "wg_1d": "Kovin maksimipuuska",
+      "r_1d": "Vuorokauden sademäärä",
+      "wawa": "Säätila",
+      "tmin": "Alin lämpötila",
+      "tmax": "Ylin lämpötila"
+    }
+  }
+}

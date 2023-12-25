@@ -1,0 +1,28 @@
+{
+  "translation": {
+    "general": {
+      "now:": "now",
+      "search": "Search"
+    },
+    "params": {
+      "t2m": "Temperature",
+      "dewpoint": "Dewpoint",
+      "t2mtdew": "Dewpoint difference",
+      "ws_10min": "Mean wind speed",
+      "wg_10min": "Maximum gust",
+      "rh": "Relative humidity",
+      "r_1h": "1h Precipitation",
+      "ri_10min": "10min Precipitation intensity",
+      "snow_aws": "Snow depth",
+      "pressure": "Pressure",
+      "vis": "Visibility",
+      "n_man": "Total cloud cover",
+      "ws_1d": "Daily maximum wind",
+      "wg_1d": "Daily maximum gust",
+      "r_1d": "Vuorokauden sademäärä",
+      "wawa": "Current weather",
+      "tmin": "Min temperature",
+      "tmax": "Max temperature"
+    }
+  }
+}

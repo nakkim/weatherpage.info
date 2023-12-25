@@ -1,9 +1,9 @@
 import { Box, ListSubheader, MenuItem, Select } from "@mui/material";
 import React, { Dispatch } from "react";
+import { useTranslation } from "react-i18next";
 
 interface IProps {
   selectedParameter: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setSelectedParameter: Dispatch<React.SetStateAction<any>>;
 }
 
@@ -23,6 +23,8 @@ const Parameter: React.FC<IProps> = ({
   selectedParameter,
   setSelectedParameter,
 }) => {
+  const { t } = useTranslation();
+
   const handleChange = (event: { target: { value: string } }) => {
     setSelectedParameter(event.target.value);
   };
@@ -41,51 +43,51 @@ const Parameter: React.FC<IProps> = ({
         value={selectedParameter}
         onChange={handleChange}
       >
-        <ListSubheader>Hetkellishavainnot</ListSubheader>
-        <MenuItem value={"ws_10min"}>Keskituuli</MenuItem>
-        <MenuItem value={"wg_10min"}>Maksimipuuska</MenuItem>
+        <ListSubheader>{t("params.Hetkellishavainnot")}</ListSubheader>
+        <MenuItem value={"ws_10min"}>{t("params.ws_10min")}</MenuItem>
+        <MenuItem value={"wg_10min"}>{t("params.wg_10min")}</MenuItem>
         <MenuItem value={"ri_10min"} selected>
-          Sateen intensiteetti
+          {t("params.ri_10min")}
         </MenuItem>
         <MenuItem value={"r_1h"} selected>
-          Tunnin sadekertymä
+          {t("params.r_1h")}
         </MenuItem>
-        <MenuItem value={"t2m"}>Lämpötila</MenuItem>
+        <MenuItem value={"t2m"}>{t('params.t2m')}</MenuItem>
         <MenuItem value={"t2mtdew"} selected>
-          Kastepiste-ero
+          {t("params.t2mtdew")}
         </MenuItem>
         <MenuItem value={"dewpoint"} selected>
-          Kastepiste
+          {t("params.dewpoint")}
         </MenuItem>
         <MenuItem value={"vis"} selected>
-          Näkyvyys
+          {t("params.vis")}
         </MenuItem>
         <MenuItem value={"wawa"} selected>
-          Vallitseva sää
+          {t("params.wawa")}
         </MenuItem>
         <MenuItem value={"n_man"} selected>
-          Kokonaispilvisyys
+          {t("params.n_man")}
         </MenuItem>
         <MenuItem value={"snow_aws"} selected>
-          Lumensyvyys
+          {t("params.snow_aws")}
         </MenuItem>
         <MenuItem value={"pressure"} selected>
-          Ilmanpaine
+          {t("params.pressure")}
         </MenuItem>
         <MenuItem value={"rh"} selected>
-          Suhteellinen kosteus
+          {t("params.rh")}
         </MenuItem>
-        <ListSubheader>Vuorokausiarvot</ListSubheader>
-        <MenuItem value={"ws_1d"}>Kovin keskituuli</MenuItem>
-        <MenuItem value={"wg_1d"}>Kovin puuska</MenuItem>
+        <ListSubheader>{t("params.Vuorokausiarvot")}</ListSubheader>
+        <MenuItem value={"ws_1d"}>{t("params.ws_1d")}</MenuItem>
+        <MenuItem value={"wg_1d"}>{t("params.wg_1d")}</MenuItem>
         <MenuItem value={"tmax"} selected>
-          Ylin lämpötila
+          {t("params.tmax")}
         </MenuItem>
         <MenuItem value={"tmin"} selected>
-          Alin lämpötila
+          {t("params.tmin")}
         </MenuItem>
         <MenuItem value={"r_1d"} selected>
-          Sadekertymä
+          {t("params.r_1d")}
         </MenuItem>
       </Select>
     </Box>

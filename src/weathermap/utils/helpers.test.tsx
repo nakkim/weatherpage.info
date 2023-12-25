@@ -32,7 +32,7 @@ describe("Test map utility functions", async () => {
       expect(element.style.paddingRight).toBe("5px");
       expect(element.style.fontSize).toBe("15px");
       expect(element.style.position).toBe("relative");
-      expect(element.style.left).toBe("1px");
+      expect(element.style.left).toBe("0px");
       expect(element.style.width).toBe("20px");
     });
 

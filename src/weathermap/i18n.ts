@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import i18next from 'i18next';
+import {changeLanguage, use} from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
 
@@ -8,7 +8,7 @@ import fi from './translations/fi.json';
 
 export const supportedLanguages = ['en', 'fi'];
 
-i18next.use(initReactI18next).use(LanguageDetector).init({
+use(initReactI18next).use(LanguageDetector).init({
   fallbackLng: 'en',
   resources: {
     en,
@@ -17,4 +17,4 @@ i18next.use(initReactI18next).use(LanguageDetector).init({
   supportedLngs: supportedLanguages,
 });
 
-i18next.changeLanguage();
+changeLanguage();

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/require-await */
 import { render } from "@testing-library/react";
-import { useTranslation } from "react-i18next";
 import { beforeEach,describe, expect, it, vi } from "vitest";
 
 import Parameter from "./Parameter";

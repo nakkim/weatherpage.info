@@ -43,7 +43,7 @@ const Parameter: React.FC<IProps> = ({
         value={selectedParameter}
         onChange={handleChange}
       >
-        <ListSubheader>{t("params.Hetkellishavainnot")}</ListSubheader>
+        <ListSubheader>{t("input.currentObservations")}</ListSubheader>
         <MenuItem value={"ws_10min"}>{t("params.ws_10min")}</MenuItem>
         <MenuItem value={"wg_10min"}>{t("params.wg_10min")}</MenuItem>
         <MenuItem value={"ri_10min"} selected>
@@ -52,7 +52,7 @@ const Parameter: React.FC<IProps> = ({
         <MenuItem value={"r_1h"} selected>
           {t("params.r_1h")}
         </MenuItem>
-        <MenuItem value={"t2m"}>{t('params.t2m')}</MenuItem>
+        <MenuItem value={"t2m"}>{t("params.t2m")}</MenuItem>
         <MenuItem value={"t2mtdew"} selected>
           {t("params.t2mtdew")}
         </MenuItem>
@@ -77,7 +77,7 @@ const Parameter: React.FC<IProps> = ({
         <MenuItem value={"rh"} selected>
           {t("params.rh")}
         </MenuItem>
-        <ListSubheader>{t("params.Vuorokausiarvot")}</ListSubheader>
+        <ListSubheader>{t("input.dailyObservations")}</ListSubheader>
         <MenuItem value={"ws_1d"}>{t("params.ws_1d")}</MenuItem>
         <MenuItem value={"wg_1d"}>{t("params.wg_1d")}</MenuItem>
         <MenuItem value={"tmax"} selected>

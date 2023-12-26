@@ -4,6 +4,10 @@
       "now": "Nyt",
       "search": "Hae"
     },
+    "input": {
+      "currentObservations": "Hetkellishavainnot",
+      "dailyObservations": "Vuorkausiarvot"
+    },
     "params": {
       "t2m": "Lämpötila",
       "dewpoint": "Kastepiste",

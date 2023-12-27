@@ -1,12 +1,12 @@
 {
   "translation": {
     "general": {
-      "now:": "Now",
+      "now": "Now",
       "search": "Search"
     },
     "input": {
-      "currentObservation": "Current observations",
-      "currentLocation": "Daily observations"
+      "currentObservations": "Current observations",
+      "dailyObservations": "Daily observations"
     },
     "params": {
       "t2m": "Temperature",

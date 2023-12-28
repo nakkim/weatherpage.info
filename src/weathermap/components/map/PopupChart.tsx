@@ -8,8 +8,7 @@ import Slider from "react-slick";
 
 import { getTimeseriesData, IResultData } from "../../network/timeseries";
 import { formatDataToEcharts } from "../../network/timeseriesUtils";
-import { formatTooltip, renderArrow } from "../../utils/helpers";
-import { ceilAndMakeEven, floorAndMakeEven } from "./mapUtils";
+import { ceilAndMakeEven, floorAndMakeEven, formatTooltip, renderArrow } from "./mapUtils";
 
 interface IProps {
   stationName: string | undefined;

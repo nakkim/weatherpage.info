@@ -4,7 +4,6 @@ import "leaflet-rotatedmarker";
 import React from "react";
 
 import { IResultData } from "../../network/timeseries";
-import { windowWidth } from "../../utils/helpers";
 import ArrowIcon from "./markerComponents/ArrowIcon";
 import ObservedCloudCover from "./markerComponents/ObservedCloudCover";
 import ObservedDefaultParameter from "./markerComponents/ObservedDefaultParameter";
@@ -15,11 +14,6 @@ interface IProps {
   selectedParameter: string;
   obsTime: Date | undefined;
 }
-
-const popupWidth =
-  windowWidth().width > 1000 ? 1000 : windowWidth().width - 150;
-export const minWidth = popupWidth;
-export const maxWidth = popupWidth;
 
 const Marker: React.FC<IProps> = ({ data, selectedParameter, obsTime }) => {
   const windParameters = ["ws_10min", "wg_10min"];

@@ -1,8 +1,7 @@
 import { CircleMarker, Popup } from "react-leaflet";
 
 import { IResultData } from "../../../network/timeseries";
-import { resolveWawaElement } from "../../../utils/helpers";
-import { maxWidth, minWidth } from "../Marker";
+import { maxWidth, minWidth, resolveWawaElement } from "../../../utils/helpers";
 import PopupChart from "../PopupChart";
 
 interface IProps {

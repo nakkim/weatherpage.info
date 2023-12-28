@@ -4,7 +4,7 @@ import { Marker as LeafletMarker, Popup } from "react-leaflet";
 
 import arrow from "../../../assets/arrow.svg";
 import { IResultData } from "../../../network/timeseries";
-import { maxWidth, minWidth } from "../Marker";
+import { maxWidth, minWidth } from "../../../utils/helpers";
 import PopupChart from "../PopupChart";
 
 interface IProps {

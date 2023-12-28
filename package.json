@@ -23,6 +23,7 @@
     "echarts-for-react": "^3.0.2",
     "i18next": "^23.7.11",
     "i18next-browser-languagedetector": "^7.2.0",
+    "install": "^0.13.0",
     "leaflet": "^1.9.4",
     "leaflet-rotatedmarker": "^0.2.0",
     "react": "^18.2.0",
@@ -31,6 +32,8 @@
     "react-i18next": "^14.0.0",
     "react-leaflet": "^4.2.1",
     "react-loader-spinner": "^5.3.4",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1",
     "vite-plugin-svgr": "^3.2.0"
   },
   "devDependencies": {
@@ -39,6 +42,7 @@
     "@types/react": "^18.2.14",
     "@types/react-datepicker": "^4.11.2",
     "@types/react-dom": "^18.2.6",
+    "@types/react-slick": "^0.23.13",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
     "@vitejs/plugin-react": "^4.0.1",

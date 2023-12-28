@@ -1,10 +1,15 @@
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import { Box } from "@mui/material";
 import ReactECharts from "echarts-for-react";
 import { useEffect, useState } from "react";
+import Slider from "react-slick";
 
 import { getTimeseriesData, IResultData } from "../../network/timeseries";
 import { formatDataToEcharts } from "../../network/timeseriesUtils";
 import { formatTooltip, renderArrow } from "../../utils/helpers";
+import { ceilAndMakeEven, floorAndMakeEven } from "./mapUtils";
 
 interface IProps {
   stationName: string | undefined;
@@ -15,6 +20,7 @@ interface IProps {
 const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
   const [data, setData] = useState<IResultData[]>([]);
   const [chartData, setChartData] = useState<(number | string | null)[][]>([]);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
   //const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const timeFormatOptions: Intl.DateTimeFormatOptions = {
@@ -60,13 +66,13 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
       trigger: "axis",
       formatter: function (params: any) {
         return formatTooltip(params, timeFormatOptions, dims);
-      }
+      },
     },
     grid: {
-      top: 60,
-      left: 20,
-      right: 30,
-      bottom: 70,
+      top: 50,
+      left: 25,
+      right: 25,
+      bottom: 60,
     },
     xAxis: {
       offset: 30,
@@ -167,6 +173,129 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
     ],
   };
 
+  const temperatureGraphOptions = {
+    title: {
+      text: "Sää havaintoasemalla",
+      x: "center",
+      textStyle: {
+        fontWeight: "normal",
+        fontSize: 14,
+      },
+    },
+    tooltip: {
+      trigger: "axis",
+      formatter: function (params: any) {
+        return formatTooltip(params, timeFormatOptions, dims);
+      },
+    },
+    grid: {
+      top: 50,
+      left: 25,
+      right: 25,
+      bottom: 60,
+    },
+    xAxis: {
+      offset: 30,
+      axisLine: {
+        onZero: false,
+      },
+      type: "time",
+      splitLine: {
+        show: true,
+        lineStyle: {
+          color: "#ddd",
+        },
+      },
+      minorSplitLine: {
+        show: true,
+      },
+      axisTick: {
+        show: true,
+      },
+      minorTick: {
+        show: false,
+      },
+      axisLabel: {
+        formatter: (item: number) => {
+          const date = new Date(item);
+          return date.toLocaleTimeString("fi-FI", {
+            hour: "2-digit",
+            minute: "2-digit",
+          });
+        },
+      },
+    },
+    yAxis: [
+      {
+        type: "value",
+        scale: true,
+        splitLine: {
+          lineStyle: {
+            color: "#ddd",
+          },
+        },
+        minorSplitLine: {
+          show: true,
+        },
+        interval: 2,
+        name: "°C",
+        boundaryGap: [0.2, 0.2],
+        max: ceilAndMakeEven(chartData),
+        min: floorAndMakeEven(chartData),
+      },
+      {
+        type: "value",
+        axisLabel: { show: false },
+        splitLine: {
+          show: false,
+        },
+      },
+    ],
+    visualMap: {
+      show: false,
+      dimension: 1,
+      pieces: [
+        {
+          gt: -100,
+          lte: -0.05,
+          color: "#0088FF",
+        },
+        {
+          gt: -0.05,
+          lte: 0.05,
+          color: "#989898",
+        },
+        {
+          gt: 0.05,
+          lte: 100,
+          color: "#FF0000",
+        },
+      ],
+    },
+    series: [
+      {
+        name: "zeroline",
+        type: "line",
+        showSymbol: false,
+        itemStyle: {
+          color: "#989898",
+          borderColor: "#989898",
+        },
+        data: chartData.map((item) => [item[dims.time], 0]),
+      },
+      {
+        name: "Temperature",
+        type: "line",
+        showSymbol: false,
+        itemStyle: {
+          color: "#FF0000",
+          borderColor: "#FF0000",
+        },
+        data: chartData.map((item) => [item[dims.time], item[dims.t2m]]),
+      },
+    ],
+  };
+
   useEffect(() => {
     if (obsTime)
       void getTimeseriesData(
@@ -183,8 +312,37 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
     setChartData(formatDataToEcharts(data));
   }, [data]);
 
+  const carouselSettings = {
+    dots: true,
+    beforeChange: (_prev: number, next: number) => {
+      setCurrentSlide(next);
+    },
+    customPaging: (index: number) => {
+      return (
+        <a>
+          <span
+            style={{
+              width: "10px",
+              height: "10px",
+              margin: "5px 7px",
+              background: index === currentSlide ? "#869791" : "#D6D6D6",
+              display: "block",
+              WebkitBackfaceVisibility: "visible",
+              transition: "opacity .2s ease",
+              borderRadius: "30px",
+            }}
+          ></span>
+        </a>
+      );
+    },
+    arrows: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    dotsClass: "slick-dots slick-active",
+  };
+
   return (
-    <Box style={{ textAlign: "center" }}>
+    <Box style={{ textAlign: "center", padding: "0 30px 30px 30px" }}>
       <Box>
         <b>Havaintoasema:</b> {stationName}
       </Box>
@@ -192,7 +350,10 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
         <b>Viimeisin havainto:</b>{" "}
         {obsTime?.toLocaleDateString("fi-FI", timeFormatOptions)}
       </Box>
-      <ReactECharts option={windGraphOptions}/>
+      <Slider {...carouselSettings}>
+        <ReactECharts option={windGraphOptions} />
+        <ReactECharts option={temperatureGraphOptions} />
+      </Slider>
     </Box>
   );
 };

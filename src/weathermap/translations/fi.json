@@ -8,6 +8,15 @@
       "currentObservations": "Hetkellishavainnot",
       "dailyObservations": "Vuorkausiarvot"
     },
+    "graph": {
+      "observationStation": "Havaintoasema",
+      "latestObservation": "Viimeisin havainto",
+      "windTitle": "Keskituulen ja maksimipuuskan vaihteluväli [m/s]",
+      "tempTitle": "Sää havaintoasemalla",
+      "legendWind": "Keskituuli - maksimipuuska",
+      "legendWindDirection": "Tuulen suunta",
+      "legendTemp": "Lämpötila"
+    },
     "params": {
       "t2m": "Lämpötila",
       "dewpoint": "Kastepiste",

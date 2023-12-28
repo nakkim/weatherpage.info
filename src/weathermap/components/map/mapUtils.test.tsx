@@ -5,7 +5,8 @@ import {
   ceilAndMakeEven,
   degreesToCardinalDirection,
   floorAndMakeEven,
-  formatTooltip,
+  formatTemperatureTooltip,
+  formatWindTooltip,
 } from "./mapUtils";
 
 const data = [
@@ -120,23 +121,49 @@ describe("Test map utility functions", async () => {
       timeZoneName: "short",
     };
     const dims = {
-      time: "time",
-      ws_10min: "ws_10min",
-      wg_10min: "wg_10min",
-      wd_10min: "wd_10min",
+      time: 0,
+      ws_10min: 1,
+      wg_10min: 2,
+      wd_10min: 3,
+      ws_1d: 4,
+      wg_1d: 5,
+      wawa: 6,
+      vis: 7,
+      t2m: 8,
+      tmin: 9,
+      tmax: 10,
+      ri_10min: 11,
+      r_1h: 12,
+      r_1d: 13,
+      rh: 14,
+      pressure: 15,
+      dewpoint: 16,
+      n_man: 17,
     };
 
-    const expectedTooltip = `
+    const expectedTooltip = [
+      `
         <div style="text-align:left">
-        <b>1.1.2022 14.00</b> <br/> 
-        Keskituuli - maksimipuuska: 10 - 15 [m/s] <br/>
-        Tuulen suunta: 360 ° <br/>
-        </div>`.replace(/\s/g, "");
+        1.1.2022 14.00 <br/> 
+        Keskituuli - maksimipuuska: <b>10 - 15 [m/s]</b> <br/>
+        Tuulen suunta: <b>180 °</b> <br/>
+        </div>`.replace(/\s/g, ""),
+      `<div style="text-align:left">
+        1.1.2022 14.00 <br/> 
+        Lämpötila: <b>°C</b> <br/>
+        </div>`.replace(/\s/g, ""),
+    ];
 
-    const tooltip = formatTooltip(params, timeFormatOptions, dims).replace(
-      /\s/g,
-      ""
-    );
-    expect(tooltip).toBe(expectedTooltip);
+    const tooltip1 = formatWindTooltip(params, timeFormatOptions, dims, {
+      parameters: ["Keskituuli - maksimipuuska", "Tuulen suunta"],
+      units: ["[m/s]", "°"],
+    }).replace(/\s/g, "");
+    expect(tooltip1).toBe(expectedTooltip[0]);
+
+    const tooltip2 = formatTemperatureTooltip(params, timeFormatOptions, dims, {
+      parameters: ["Lämpötila"],
+      units: ["°C"],
+    }).replace(/\s/g, "");
+    expect(tooltip2).toBe(expectedTooltip[1]);
   });
 });

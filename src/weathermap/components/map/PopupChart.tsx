@@ -4,11 +4,18 @@ import "slick-carousel/slick/slick-theme.css";
 import { Box } from "@mui/material";
 import ReactECharts from "echarts-for-react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import Slider from "react-slick";
 
 import { getTimeseriesData, IResultData } from "../../network/timeseries";
 import { formatDataToEcharts } from "../../network/timeseriesUtils";
-import { ceilAndMakeEven, floorAndMakeEven, formatTooltip, renderArrow } from "./mapUtils";
+import {
+  ceilAndMakeEven,
+  floorAndMakeEven,
+  formatTemperatureTooltip,
+  formatWindTooltip,
+  renderArrow,
+} from "./mapUtils";
 
 interface IProps {
   stationName: string | undefined;
@@ -21,6 +28,8 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
   const [chartData, setChartData] = useState<(number | string | null)[][]>([]);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   //const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { t } = useTranslation();
 
   const timeFormatOptions: Intl.DateTimeFormatOptions = {
     day: "numeric",
@@ -54,7 +63,7 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
 
   const windGraphOptions = {
     title: {
-      text: "Keskituulen ja maksimipuuskan vaihteluväli [m/s]",
+      text: t("graph.windTitle"),
       x: "center",
       textStyle: {
         fontWeight: "normal",
@@ -64,7 +73,10 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
     tooltip: {
       trigger: "axis",
       formatter: function (params: any) {
-        return formatTooltip(params, timeFormatOptions, dims);
+        return formatWindTooltip(params, timeFormatOptions, dims, {
+          parameters: [t("graph.legendWind"), t("graph.legendWindDirection")],
+          units: ["m/s", "°"],
+        });
       },
     },
     grid: {
@@ -174,7 +186,7 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
 
   const temperatureGraphOptions = {
     title: {
-      text: "Sää havaintoasemalla",
+      text: t("graph.tempTitle"),
       x: "center",
       textStyle: {
         fontWeight: "normal",
@@ -184,7 +196,10 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
     tooltip: {
       trigger: "axis",
       formatter: function (params: any) {
-        return formatTooltip(params, timeFormatOptions, dims);
+        return formatTemperatureTooltip(params, timeFormatOptions, {
+          parameters: [t("graph.legendTemp")],
+          units: ["[°C]"],
+        });
       },
     },
     grid: {
@@ -300,7 +315,9 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
       void getTimeseriesData(
         obsTime,
         setData,
-        () => {(true)},
+        () => {
+          true;
+        },
         obsTime?.toISOString(),
         fmisid
       );

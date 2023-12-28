@@ -20,29 +20,27 @@ const dims = {
   n_man: 17,
 };
 
-export const floorAndMakeEven = (data: (number | string | null)[][]): number => {
+export const floorAndMakeEven = (
+  data: (number | string | null)[][]
+): number => {
   let result = Math.floor(
-    Math.min(
-      ...(data.map((item) => [item[dims.t2m]]).flat() as number[])
-    )
-  )
+    Math.min(...(data.map((item) => [item[dims.t2m]]).flat() as number[]))
+  );
   if (result % 2 !== 0) {
     result -= 1;
   }
   return result;
-}
+};
 
 export const ceilAndMakeEven = (data: (number | string | null)[][]): number => {
   let result = Math.ceil(
-    Math.max(
-      ...(data.map((item) => [item[dims.t2m]]).flat() as number[])
-    )
-  )
+    Math.max(...(data.map((item) => [item[dims.t2m]]).flat() as number[]))
+  );
   if (result % 2 !== 0) {
     result += 1;
   }
   return result;
-}
+};
 
 export const degreesToCardinalDirection = (degrees: number): string => {
   const directions = [
@@ -101,7 +99,7 @@ export const renderArrow: echarts.CustomSeriesOption["renderItem"] = function (
   dir.forEach(function (name, index) {
     directionMap[name] = (Math.PI / 8) * index;
   });
-  if(api.value(dims.windgust) === 0) return;
+  if (api.value(dims.windgust) === 0) return;
   const point = api.coord([api.value(dims.time), 0]);
   point[1] = point[1] + 15;
   const arrowSize = 12;
@@ -139,21 +137,48 @@ export const renderArrow: echarts.CustomSeriesOption["renderItem"] = function (
   };
 };
 
-export const formatTooltip = (params: any, timeFormatOptions: Intl.DateTimeFormatOptions, dims: any) => {
-
+export const formatWindTooltip = (
+  params: any,
+  timeFormatOptions: Intl.DateTimeFormatOptions,
+  dims: any,
+  phrases: { parameters: string[]; units: string[] }
+) => {
   const timeString = new Date(
     params[0].value[dims.time] as string
   ).toLocaleDateString("fi-FI", {
     ...timeFormatOptions,
     timeZoneName: undefined,
   });
-  const valueStringWind = `Keskituuli - maksimipuuska: ${
+  const valueStringWind = `${phrases.parameters[0]}: <b>${
     params[0].value[dims.ws_10min] as string
-  } - ${params[0].value[dims.wg_10min] as string} [m/s]`;
-  const valueStringWindDirection = `Tuulen suunta: ${(params[1].value[dims.wd_10min] as number + 180) as unknown as string} °`
+  } - ${params[0].value[dims.wg_10min] as string} ${phrases.units[0]}</b>`;
+  const valueStringWindDirection = `${phrases.parameters[1]}: <b>${
+    params[1].value[dims.wd_10min] as number as unknown as string
+  } °</b>`;
   return `<div style="text-align:left">
-    <b>${timeString}</b> <br/> 
+    ${timeString} <br/> 
     ${valueStringWind} <br/>
     ${valueStringWindDirection} <br/>
     </div>`;
-}
+};
+
+export const formatTemperatureTooltip = (
+  params: any,
+  timeFormatOptions: Intl.DateTimeFormatOptions,
+  phrases: { parameters: string[]; units: string[] }
+) => {
+  console.log(dims)
+  const timeString = new Date(
+    params[1].value[0] as string
+  ).toLocaleDateString("fi-FI", {
+    ...timeFormatOptions,
+    timeZoneName: undefined,
+  });
+  const valueStringWind = `${phrases.parameters[0]}: <b>${
+    params[1].value[1] as string
+  } ${phrases.units[0]}</b>`;
+  return `<div style="text-align:left">
+    ${timeString} <br/> 
+    ${valueStringWind} <br/>
+    </div>`;
+};

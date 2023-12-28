@@ -8,6 +8,15 @@
       "currentObservations": "Current observations",
       "dailyObservations": "Daily observations"
     },
+    "graph": {
+      "observationStation": "Observation station",
+      "latestObservation": "Latest observation",
+      "windTitle": "Mean wind speed and gust [m/s]",
+      "tempTitle": "Weather on observation station",
+      "legendWind": "Mean wind speed - maximum gust",
+      "legendWindDirection": "Wind direction",
+      "legendTemp": "Temperature"
+    },
     "params": {
       "t2m": "Temperature",
       "dewpoint": "Dewpoint",

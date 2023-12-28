@@ -167,7 +167,6 @@ export const formatTemperatureTooltip = (
   timeFormatOptions: Intl.DateTimeFormatOptions,
   phrases: { parameters: string[]; units: string[] }
 ) => {
-  console.log(dims)
   const timeString = new Date(
     params[1].value[0] as string
   ).toLocaleDateString("fi-FI", {

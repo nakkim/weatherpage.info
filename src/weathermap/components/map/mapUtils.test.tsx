@@ -160,7 +160,7 @@ describe("Test map utility functions", async () => {
     }).replace(/\s/g, "");
     expect(tooltip1).toBe(expectedTooltip[0]);
 
-    const tooltip2 = formatTemperatureTooltip(params, timeFormatOptions, dims, {
+    const tooltip2 = formatTemperatureTooltip(params, timeFormatOptions, {
       parameters: ["Lämpötila"],
       units: ["°C"],
     }).replace(/\s/g, "");

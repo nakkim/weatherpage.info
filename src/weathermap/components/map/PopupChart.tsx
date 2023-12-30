@@ -198,7 +198,7 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
       formatter: function (params: any) {
         return formatTemperatureTooltip(params, timeFormatOptions, {
           parameters: [t("graph.legendTemp")],
-          units: ["[°C]"],
+          units: ["°C"],
         });
       },
     },

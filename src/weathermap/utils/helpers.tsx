@@ -83,9 +83,9 @@ export const getFontColor = (
   hexColor: string | undefined,
   param: string,
   value: number
-): 'black' | 'white' => {
+): "black" | "white" => {
   const temperatureParams = ["t2m", "tmin", "tmax", "dewpoint"];
-  const ignoredParams = ["r_1h", "r_1d", "ri_10min", 't2mtdew', 'snow_aws'];
+  const ignoredParams = ["r_1h", "r_1d", "ri_10min", "t2mtdew", "snow_aws"];
 
   if (temperatureParams.includes(param) && value < 0) return "black";
   if (ignoredParams.includes(param)) return "black";
@@ -95,8 +95,7 @@ export const getFontColor = (
     const threshold = 0.2; // Adjust this value to make the decision more or less sensitive
     const textColor = luminance > threshold ? "black" : "white";
     return textColor;
-  }
-  else return "black";
+  } else return "black";
 };
 
 export const resolveElementColor = (param: string, value: number): string => {
@@ -381,7 +380,6 @@ export const resolveElement = (param: string, value: number | string) => {
 
   const element: HTMLElement = document.createElement("span");
 
-  // expetions
   if (param === "snow_aws" && value === -1) return element;
 
   // resolve element background color
@@ -428,19 +426,20 @@ export const resolveElement = (param: string, value: number | string) => {
   if (param === "wawa") {
     const val = resolveWawaElement(value as number);
     if (typeof val === "object") element.innerText = val.short;
-  } else
+  } else {
+    if(value)
     element.innerText = typeof value === "string" ? value : value.toFixed(1);
-
+  }
   return element;
 };
 
-export const windowWidth = (): {width: number, height: number} => {
+export const windowWidth = (): { width: number; height: number } => {
   const { innerWidth: width, innerHeight: height } = window;
   return {
     width,
-    height
+    height,
   };
-}
+};
 
 const popupWidth =
   windowWidth().width > 1000 ? 1000 : windowWidth().width - 150;

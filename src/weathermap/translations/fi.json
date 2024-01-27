@@ -20,7 +20,7 @@
     "params": {
       "t2m": "Lämpötila",
       "dewpoint": "Kastepiste",
-      "t2mtdew": "Kastepiste",
+      "t2mtdew": "Kastepiste-ero",
       "ws_10min": "Keskituuli",
       "wg_10min": "Maksimipuuska",
       "rh": "Suhteellinen kosteus",

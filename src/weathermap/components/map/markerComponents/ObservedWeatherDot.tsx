@@ -23,7 +23,7 @@ const ObservedWeatherDot: React.FC<IProps> = ({ station, selectedParameter, obsT
       weight={2}
       radius={6}
       fillColor={fillValue.color}
-      fillOpacity={1}
+      fillOpacity={Number(paramValue) === 0 ? 0 : 1}
     >
       <Popup minWidth={minWidth} maxWidth={maxWidth} key={station.fmisid}>
         <PopupChart

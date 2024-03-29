@@ -384,7 +384,6 @@ export const resolveElement = (param: string, value: number | string) => {
 
   // resolve element background color
   if (typeof value === "number") {
-    if(value === 0) console.log(value)
     const elementStyle = resolveElementColor(param, value);
     const WawaStyle = resolveWawaElement(value);
     if (param === "wawa")

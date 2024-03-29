@@ -1,9 +1,11 @@
 import L from "leaflet";
+import ReactDOMServer from "react-dom/server";
 import { Marker as LeafletMarker, Popup } from "react-leaflet";
 
 import { IResultData } from "../../../network/timeseries";
 import { maxWidth, minWidth, resolveElement } from "../../../utils/helpers";
 import PopupChart from "../PopupChart";
+import ObservedCloudCover from "./ObservedCloudCover";
 
 interface IProps {
   station: IResultData;
@@ -53,7 +55,28 @@ const ObservedDefaultParameter: React.FC<IProps> = ({
             </Popup>
           </LeafletMarker>
         );
-      else
+      else if (selectedParameter === "n_man") {
+        return (
+          <LeafletMarker
+            key={`${station.fmisid}-${station.lat}-${station.lon}`}
+            position={[station.lat, station.lon]}
+            icon={L.divIcon({
+              className: "custom-icon",
+              html: ReactDOMServer.renderToString(
+                <ObservedCloudCover value={paramValue} />
+              ),
+            })}
+          >
+            <Popup minWidth={minWidth} maxWidth={maxWidth} key={station.fmisid}>
+              <PopupChart
+                stationName={station.name}
+                fmisid={station.fmisid}
+                obsTime={obsTime}
+              />
+            </Popup>
+          </LeafletMarker>
+        );
+      } else {
         return (
           <LeafletMarker
             position={[station.lat, station.lon]}
@@ -73,6 +96,7 @@ const ObservedDefaultParameter: React.FC<IProps> = ({
             </Popup>
           </LeafletMarker>
         );
+      }
 };
 
 export default ObservedDefaultParameter;

@@ -5,7 +5,6 @@ import React from "react";
 
 import { IResultData } from "../../network/timeseries";
 import ArrowIcon from "./markerComponents/ArrowIcon";
-import ObservedCloudCover from "./markerComponents/ObservedCloudCover";
 import ObservedDefaultParameter from "./markerComponents/ObservedDefaultParameter";
 
 interface IProps {
@@ -32,9 +31,6 @@ const Marker: React.FC<IProps> = ({ data, selectedParameter, obsTime }) => {
     if (station.lat && station.lon) {
       // symbol parameters
       if (paramValue !== null && paramValue !== undefined) {
-        if (selectedParameter === "n_man")
-          return <ObservedCloudCover value={paramValue} />;
-
         // other parameters
         return (
           <React.Fragment key={station?.fmisid}>

@@ -384,14 +384,13 @@ export const resolveElement = (param: string, value: number | string) => {
 
   // resolve element background color
   if (typeof value === "number") {
+    if(value === 0) console.log(value)
     const elementStyle = resolveElementColor(param, value);
     const WawaStyle = resolveWawaElement(value);
     if (param === "wawa")
       Object.assign(element.style, {
         ...styles.element,
         color: WawaStyle?.color,
-        left: "7px",
-        bottom: "25px",
         fontSize: "11px",
         backgroundColor:
           WawaStyle?.backgroundColor === "#ffffff"
@@ -407,27 +406,25 @@ export const resolveElement = (param: string, value: number | string) => {
             : value <= 2000 && value > 1000
             ? "black"
             : "rgb(130, 1, 1)",
-        left: "7px",
-        bottom: "25px",
         fontSize: "15px",
         backgroundColor:
           WawaStyle?.backgroundColor === "#ffffff"
             ? `rgba(${hexToRgb(WawaStyle?.backgroundColor)},0.2)`
             : `rgba(${hexToRgb(WawaStyle?.backgroundColor)},0.7)`,
       });
-    else
+    else{
       Object.assign(element.style, {
         ...styles.element,
         color: getFontColor(resolveElementColor(param, value), param, value),
         backgroundColor: `rgba(${hexToRgb(elementStyle)},0.7)`,
-      });
+      });}
   }
 
   if (param === "wawa") {
     const val = resolveWawaElement(value as number);
     if (typeof val === "object") element.innerText = val.short;
   } else {
-    if(value)
+    if(typeof value === 'number' || typeof value === 'string')
     element.innerText = typeof value === "string" ? value : value.toFixed(1);
   }
   return element;

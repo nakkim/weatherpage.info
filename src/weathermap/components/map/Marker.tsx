@@ -7,7 +7,6 @@ import { IResultData } from "../../network/timeseries";
 import ArrowIcon from "./markerComponents/ArrowIcon";
 import ObservedCloudCover from "./markerComponents/ObservedCloudCover";
 import ObservedDefaultParameter from "./markerComponents/ObservedDefaultParameter";
-import ObservedWeatherDot from "./markerComponents/ObservedWeatherDot";
 
 interface IProps {
   data: IResultData[];
@@ -29,21 +28,10 @@ const Marker: React.FC<IProps> = ({ data, selectedParameter, obsTime }) => {
       : "wg_max_dir";
 
   return data.map((station: IResultData) => {
-    let paramValue = station[selectedParameter as keyof IResultData];
-    if (selectedParameter === "t2mtdew")
-      if (station.t2m && station.dewpoint)
-        paramValue = station.t2m - station.dewpoint;
-
+    const paramValue = station[selectedParameter as keyof IResultData];
     if (station.lat && station.lon) {
-      <ObservedDefaultParameter
-        station={station}
-        selectedParameter={selectedParameter}
-        obsTime={obsTime}
-        displayArrowIcon={displayArrowIcon}
-        isMissingValid={allowMissingValueParameters.includes(selectedParameter)}
-      />;
+      // symbol parameters
       if (paramValue !== null && paramValue !== undefined) {
-        // symbol parameters
         if (selectedParameter === "n_man")
           return <ObservedCloudCover value={paramValue} />;
 
@@ -59,13 +47,6 @@ const Marker: React.FC<IProps> = ({ data, selectedParameter, obsTime }) => {
                 selectedParameter
               )}
             />
-            {selectedParameter === "wawa" && (
-              <ObservedWeatherDot
-                station={station}
-                selectedParameter={selectedParameter}
-                obsTime={obsTime}
-              />
-            )}
             {displayArrowIcon && (
               <ArrowIcon
                 arrowDirection={arrowDirection}

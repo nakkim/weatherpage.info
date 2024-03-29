@@ -20,54 +20,59 @@ const ObservedDefaultParameter: React.FC<IProps> = ({
   displayArrowIcon,
   isMissingValid,
 }) => {
-  const paramValue = station[selectedParameter as keyof IResultData];
+  let paramValue = station[selectedParameter as keyof IResultData];
+  if (selectedParameter === "t2mtdew")
+    if (station.t2m && station.dewpoint)
+      paramValue = station.t2m - station.dewpoint;
+
   const element =
     !paramValue && isMissingValid
       ? resolveElement(selectedParameter, "-")
       : resolveElement(selectedParameter, paramValue as number);
 
-  if (station.lat && station.lon)
-    if (isMissingValid)
-      return (
-        <LeafletMarker
-          key={`${station.fmisid}-${station.lat}-${station.lon}`}
-          position={[station.lat, station.lon]}
-          icon={L.divIcon({
-            iconAnchor: [0, 0],
-            html: element,
-            iconSize: [0, 0],
-            className: "custom-icon",
-          })}
-        >
-          <Popup minWidth={minWidth} maxWidth={maxWidth} key={station.fmisid}>
-            <PopupChart
-              stationName={station.name}
-              fmisid={station.fmisid}
-              obsTime={obsTime}
-            />
-          </Popup>
-        </LeafletMarker>
-      );
-    else
-      return (
-        <LeafletMarker
-          position={[station.lat, station.lon]}
-          icon={L.divIcon({
-            iconAnchor: displayArrowIcon ? [10, 0] : [0, 0],
-            html: element,
-            iconSize: displayArrowIcon ? [20, 18] : [0, 0],
-            className: "leaflet-div-icon-none",
-          })}
-        >
-          <Popup minWidth={minWidth} maxWidth={maxWidth} key={station.fmisid}>
-            <PopupChart
-              stationName={station.name}
-              fmisid={station.fmisid}
-              obsTime={obsTime}
-            />
-          </Popup>
-        </LeafletMarker>
-      );
+  if (paramValue !== undefined && paramValue !== null)
+    if (station.lat && station.lon)
+      if (isMissingValid)
+        return (
+          <LeafletMarker
+            key={`${station.fmisid}-${station.lat}-${station.lon}`}
+            position={[station.lat, station.lon]}
+            icon={L.divIcon({
+              iconAnchor: [0, 0],
+              html: element,
+              iconSize: [0, 0],
+              className: "custom-icon",
+            })}
+          >
+            <Popup minWidth={minWidth} maxWidth={maxWidth} key={station.fmisid}>
+              <PopupChart
+                stationName={station.name}
+                fmisid={station.fmisid}
+                obsTime={obsTime}
+              />
+            </Popup>
+          </LeafletMarker>
+        );
+      else
+        return (
+          <LeafletMarker
+            position={[station.lat, station.lon]}
+            icon={L.divIcon({
+              iconAnchor: displayArrowIcon ? [10, 0] : [0, 0],
+              html: element,
+              iconSize: displayArrowIcon ? [20, 18] : [0, 0],
+              className: "leaflet-div-icon-none",
+            })}
+          >
+            <Popup minWidth={minWidth} maxWidth={maxWidth} key={station.fmisid}>
+              <PopupChart
+                stationName={station.name}
+                fmisid={station.fmisid}
+                obsTime={obsTime}
+              />
+            </Popup>
+          </LeafletMarker>
+        );
 };
 
 export default ObservedDefaultParameter;

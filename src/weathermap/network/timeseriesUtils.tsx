@@ -4,8 +4,11 @@ import { IResultData } from "./timeseries";
 export const getTimeValue = async (
   setObsTime: (obsTime: Date) => void
 ): Promise<any> => {
+  
   const currentDate = new Date().getTime();
+  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000
   const timeUrl = `https://opendata.fmi.fi/timeseries?endTime=now&format=json&timeformat=xml&keyword=synop_fi&param=stationname+as+name,time,t2m&producer=opendata`;
+  
   await fetch(timeUrl, { cache: "no-store" })
     .then((result) => result?.json() as Promise<IResultData[]>)
     .then((result) => {
@@ -17,11 +20,13 @@ export const getTimeValue = async (
         .filter((x) => {
           if (currentDate - x < 1000 * 60 * 10) return x;
         });
-      setObsTime(new Date(floorToNearest10Minutes(timeArray[0])));
+      setObsTime(new Date(floorToNearest10Minutes(timeArray[0] - timezoneOffset)));
     });
 };
 
-export const formatDataToEcharts = (data: IResultData[]): (string | number | null)[][] => {
+export const formatDataToEcharts = (
+  data: IResultData[]
+): (string | number | null)[][] => {
   const result: (number | string | null)[][] = [];
   for (let i = 0; i < data.length; i++) {
     const item = data[i];
@@ -46,7 +51,7 @@ export const formatDataToEcharts = (data: IResultData[]): (string | number | nul
       item.n_man ?? null,
     ]);
   }
-  return result
+  return result;
 };
 
 export const subtractHours = (date: Date, hours: number): Date => {

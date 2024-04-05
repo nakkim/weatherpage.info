@@ -13,7 +13,7 @@ export interface IResultData {
   lat?: number;
   lon?: number;
   time: string;
-  utctime: string;
+  utctime?: string;
   producer?: string;
   region?: string;
   fmisid: number;

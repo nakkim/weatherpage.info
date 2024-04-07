@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { IResultData } from "./timeseries";
 import { formatDataToEcharts, subtractHours } from "./timeseriesUtils";
+import { IResultData } from "./types/types";
 
 describe("timeseriesUtils", () => {
   describe("subtractHours", () => {

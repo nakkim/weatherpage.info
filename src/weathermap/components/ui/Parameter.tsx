@@ -1,10 +1,10 @@
 import { Box, ListSubheader, MenuItem, Select } from "@mui/material";
-import React, { Dispatch } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 
 interface IProps {
   selectedParameter: string;
-  setSelectedParameter: Dispatch<React.SetStateAction<any>>;
+  setSelectedParameter: (parameter: string) => void;
 }
 
 const styles = {

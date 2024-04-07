@@ -3,7 +3,7 @@ import "leaflet-rotatedmarker";
 
 import React from "react";
 
-import { IResultData } from "../../network/timeseries";
+import { IResultData } from "../../network/types/types";
 import ArrowIcon from "./markerComponents/ArrowIcon";
 import ObservedDefaultParameter from "./markerComponents/ObservedDefaultParameter";
 

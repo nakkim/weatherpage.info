@@ -9,9 +9,9 @@ import Parameter from "./components/ui/Parameter";
 import Version from "./components/ui/Version";
 import {
   getTimeseriesData,
+  getTimeValue,
   IResultData,
 } from "./network/timeseries";
-import { getTimeValue } from "./network/timeseriesUtils";
 
 interface TimeProp {
   time: string;

@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Slider from "react-slick";
 
-import { getTimeseriesData, IResultData } from "../../network/timeseries";
+import { getTimeseriesData } from "../../network/timeseries";
 import { formatDataToEcharts } from "../../network/timeseriesUtils";
+import { IResultData } from "../../network/types/types";
 import {
   ceilAndMakeEven,
   floorAndMakeEven,
@@ -72,6 +73,7 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
     },
     tooltip: {
       trigger: "axis",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       formatter: function (params: any) {
         return formatWindTooltip(params, timeFormatOptions, dims, {
           parameters: [t("graph.legendWind"), t("graph.legendWindDirection")],
@@ -195,6 +197,7 @@ const PopupChart: React.FC<IProps> = ({ stationName, fmisid, obsTime }) => {
     },
     tooltip: {
       trigger: "axis",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       formatter: function (params: any) {
         return formatTemperatureTooltip(params, timeFormatOptions, {
           parameters: [t("graph.legendTemp")],

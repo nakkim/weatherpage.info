@@ -138,8 +138,10 @@ export const renderArrow: echarts.CustomSeriesOption["renderItem"] = function (
 };
 
 export const formatWindTooltip = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: any,
   timeFormatOptions: Intl.DateTimeFormatOptions,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dims: any,
   phrases: { parameters: string[]; units: string[] }
 ) => {
@@ -163,6 +165,7 @@ export const formatWindTooltip = (
 };
 
 export const formatTemperatureTooltip = (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: any,
   timeFormatOptions: Intl.DateTimeFormatOptions,
   phrases: { parameters: string[]; units: string[] }

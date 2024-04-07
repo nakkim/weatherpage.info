@@ -2,7 +2,7 @@ import L from "leaflet";
 import ReactDOMServer from "react-dom/server";
 import { Marker as LeafletMarker, Popup } from "react-leaflet";
 
-import { IResultData } from "../../../network/timeseries";
+import { IResultData } from "../../../network/types/types";
 import { maxWidth, minWidth, resolveElement } from "../../../utils/helpers";
 import PopupChart from "../PopupChart";
 import ObservedCloudCover from "./ObservedCloudCover";

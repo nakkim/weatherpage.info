@@ -5,7 +5,7 @@ import {
   minutesFromMidnight,
 } from "../utils/helpers";
 import { subtractHours } from "./timeseriesUtils";
-import { IResultData } from "./types/types";
+import { IRequestParameters, IResultData } from "./types/types";
 
 export const getTimeseriesData = async (
   obsTime: Date | undefined,
